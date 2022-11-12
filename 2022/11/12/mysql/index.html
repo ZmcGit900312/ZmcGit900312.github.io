@@ -5,15 +5,17 @@
   
 
   
-  <title>Technique Life</title>
+  <title>MySql 学习笔记 | Technique Life</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="You can&#39;t handle your life, you just can hold on yourself.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Technique Life">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="1. 终端操作进入数据库 1mysql -u root -p 123456 1.1 如何查看有什么数据库 show databases;1234567891011mysql&gt; show databases;+--------------------+| Database           |+--------------------+| information_schema || mysq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySql 学习笔记">
+<meta property="og:url" content="http://example.com/2022/11/12/mysql/index.html">
 <meta property="og:site_name" content="Technique Life">
-<meta property="og:description" content="You can&#39;t handle your life, you just can hold on yourself.">
+<meta property="og:description" content="1. 终端操作进入数据库 1mysql -u root -p 123456 1.1 如何查看有什么数据库 show databases;1234567891011mysql&gt; show databases;+--------------------+| Database           |+--------------------+| information_schema || mysq">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-12T14:42:24.000Z">
+<meta property="article:modified_time" content="2022-11-12T14:49:24.239Z">
 <meta property="article:author" content="ZMC">
 <meta name="twitter:card" content="summary">
   
@@ -64,56 +66,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-忘记Sql密码怎么办" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/11/12/%E5%BF%98%E8%AE%B0Sql%E5%AF%86%E7%A0%81%E6%80%8E%E4%B9%88%E5%8A%9E/" class="article-date">
-  <time datetime="2022-11-12T14:50:40.000Z" itemprop="datePublished">2022-11-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/11/12/%E5%BF%98%E8%AE%B0Sql%E5%AF%86%E7%A0%81%E6%80%8E%E4%B9%88%E5%8A%9E/">忘记Sql密码怎么办</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-关闭sql"><a href="#1-关闭sql" class="headerlink" title="1. 关闭sql"></a>1. 关闭sql</h1><p>以管理员身份打开cmd输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net stop sql</span><br></pre></td></tr></table></figure>
-<h1 id="2-跳过权限表"><a href="#2-跳过权限表" class="headerlink" title="2. 跳过权限表"></a>2. 跳过权限表</h1><p>在命令行窗口输入：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --skip-grant-tables</span><br></pre></td></tr></table></figure>
-<h1 id="3-重置密码"><a href="#3-重置密码" class="headerlink" title="3. 重置密码"></a>3. 重置密码</h1><h2 id="3-1-打开另一个cmd窗口，输入mysql进入数据库"><a href="#3-1-打开另一个cmd窗口，输入mysql进入数据库" class="headerlink" title="3.1 打开另一个cmd窗口，输入mysql进入数据库"></a>3.1 打开另一个cmd窗口，输入mysql进入数据库</h2><h2 id="3-2-输入show-databases-看到数据库说明进入成功"><a href="#3-2-输入show-databases-看到数据库说明进入成功" class="headerlink" title="3.2 输入show databases;看到数据库说明进入成功"></a>3.2 输入<code>show databases;</code>看到数据库说明进入成功</h2><h2 id="3-3-权限表放在mysql-user中"><a href="#3-3-权限表放在mysql-user中" class="headerlink" title="3.3 权限表放在mysql.user中"></a>3.3 权限表放在mysql.user中</h2><h2 id="3-4-输入SELECT-user-host-plugin-authentication-string-from-mysql-user-可以看见用户和加密后的密码"><a href="#3-4-输入SELECT-user-host-plugin-authentication-string-from-mysql-user-可以看见用户和加密后的密码" class="headerlink" title="3.4 输入SELECT user, host, plugin, authentication_string from mysql.user;可以看见用户和加密后的密码"></a>3.4 输入<code>SELECT user, host, plugin, authentication_string from mysql.user;</code>可以看见用户和加密后的密码</h2><blockquote>
-<p>注意，plugin插件代表加密方式，mysql自带的是mysql_native_password</p>
-</blockquote>
-<h2 id="3-5-更改root密码"><a href="#3-5-更改root密码" class="headerlink" title="3.5 更改root密码"></a>3.5 更改root密码</h2><p>输入<code>update user set password=password(&#39;123456&#39;) where user=&#39;root&#39; and host=&#39;localhost&#39;;</code></p>
-<h2 id="3-6-再次查看密码"><a href="#3-6-再次查看密码" class="headerlink" title="3.6 再次查看密码"></a>3.6 再次查看密码</h2><p>输入<code>SELECT user, host, plugin, authentication_string from mysql.user;</code></p>
-<h1 id="4-重启mysql"><a href="#4-重启mysql" class="headerlink" title="4. 重启mysql"></a>4. 重启mysql</h1><h2 id="4-1-关闭cmd，并手动停止mysqld的运行"><a href="#4-1-关闭cmd，并手动停止mysqld的运行" class="headerlink" title="4.1 关闭cmd，并手动停止mysqld的运行"></a>4.1 关闭cmd，并手动停止mysqld的运行</h2><h2 id="4-2-输入net-start-mysql重启mysql"><a href="#4-2-输入net-start-mysql重启mysql" class="headerlink" title="4.2 输入net start mysql重启mysql"></a>4.2 输入<code>net start mysql</code>重启mysql</h2><h2 id="4-3-输入mysql-u-root-p-123456登录mysql"><a href="#4-3-输入mysql-u-root-p-123456登录mysql" class="headerlink" title="4.3 输入mysql -u root -p 123456登录mysql"></a>4.3 输入<code>mysql -u root -p 123456</code>登录mysql</h2>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/12/%E5%BF%98%E8%AE%B0Sql%E5%AF%86%E7%A0%81%E6%80%8E%E4%B9%88%E5%8A%9E/" data-id="clae1v7pw00027ckwbrstgtfy" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sql/" rel="tag">Sql</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-mysql" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-mysql" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2022/11/12/mysql/" class="article-date">
   <time datetime="2022-11-12T14:42:24.000Z" itemprop="datePublished">2022-11-12</time>
@@ -126,8 +79,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/11/12/mysql/">MySql 学习笔记</a>
+    <h1 class="article-title" itemprop="name">
+      MySql 学习笔记
     </h1>
   
 
@@ -364,187 +317,28 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-einsum-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/11/12/einsum-1/" class="article-date">
-  <time datetime="2022-11-12T07:39:31.435Z" itemprop="datePublished">2022-11-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <a href="/2022/11/12/%E5%BF%98%E8%AE%B0Sql%E5%AF%86%E7%A0%81%E6%80%8E%E4%B9%88%E5%8A%9E/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/11/12/einsum-1/">einsum满足你一切需要：深度学习中的爱因斯坦求和约定</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-einsum记法"><a href="#1-einsum记法" class="headerlink" title="1. einsum记法"></a>1. einsum记法</h1><p>如果你像我一样，发现记住<code>PyTorch/TensorFlow</code>中那些计算点积、外积、转置、矩阵-向量乘法、矩阵-矩阵乘法的函数名字和签名很费劲，那么<code>einsum</code>记法就是我们的救星。<code>einsum</code>记法是一个表达以上这些运算，包括复杂张量运算在内的优雅方式，基本上，可以把<code>einsum</code>看成一种领域特定语言。一旦你理解并能利用<code>einsum</code>，除了不用记忆和频繁查找特定库函数这个好处以外，你还能够更迅速地编写更加紧凑、高效的代码。而不使用<code>einsum</code>的时候，容易出现引入不必要的张量变形或转置运算，以及可以省略的中间张量的现象。此外，<code>einsum</code>这样的领域特定语言有时可以编译到高性能代码，事实上，<code>PyTorch</code>最近引入的能够自动生成GPU代码并为特定输入尺寸自动调整代码的<a href="https://link.zhihu.com/?target=http%3A//pytorch.org/2018/03/05/tensor-comprehensions.html">张量理解</a>（Tensor Comprehensions）就基于类似<code>einsum</code>的领域特定语言。此外，可以使用<a href="https://link.zhihu.com/?target=https%3A//github.com/dgasmith/opt_einsum">opt einsum</a>和<a href="https://link.zhihu.com/?target=https%3A//github.com/Bihaqo/tf_einsum_opt">tf einsum opt</a>这样的项目优化<code>einsum</code>表达式的构造顺序。</p>
-<p>比方说，我们想要将两个矩阵$A \in \mathbb R^{I \times K}$ 和 $A \in \mathbb R^{K \times J}$  相乘，接着计算每列的和，最终得到向量 $c \in \mathbb R^{J}$  。使用爱因斯坦求和约定，这可以表达为：</p>
-<script type="math/tex; mode=display">
-{\huge {\color{SeaGreen} c_{j}} 
-=\sum_{i} \sum_{k} {\color{ProcessBlue} A_{i k}}  {\color{Lavender} B_{k j}} 
-={\color{ProcessBlue} A_{i k}} {\color{Lavender} B_{k j}} \cdot
-}</script><p>这一表达式指明了$c$中的每个元素$c_i$是如何计算的，列向量$\mathbf A_{i:}$乘以行向量$\mathbf B_{:j}$，然后求和。注意，在爱因斯坦求和约定中，我们省略了求和符号${\large}\Sigma$，因为我们隐式地累加重复的下标（这里是$k$）和输出中未指明的下标（这里是$i$）。当然，<code>einsum</code>也能表达更基本的运算。比如，计算两个向量$a,b \in \mathbb R^J$的点积可以表达为：</p>
-<script type="math/tex; mode=display">
-{\huge {\color{SeaGreen} c} 
-=\sum_{i} {\color{ProcessBlue} a_{i}}  {\color{Lavender} b_{i}} 
-={\color{ProcessBlue} a_{i}} {\color{Lavender} b_{i}} \cdot}</script><p>在深度学习中，我经常碰到的一个问题是，变换高阶张量到向量。例如，我可能有一个张量，其中包含一个batch中的$N$个训练样本，每个样本是一个长度为$T$的$K$维词向量序列，我想把词向量投影到一个不同的维度$Q$。如果将这个张量记作$\mathbf T\in \mathbb R^{N \times T \times K}$，将投影矩阵记作$\mathbf W \in \mathbb R^{K\times Q}$，那么所需计算可以用<code>einsum</code>表达为：</p>
-<script type="math/tex; mode=display">
-{\huge {\color{SeaGreen} C_{ntq}}
-=\sum_{k} {\color{ProcessBlue} T_{ntk} {\color{Lavender} W_{kq}}}
-= {\color{ProcessBlue} T_{ntk}} {\color{Lavender} W_{kq}} \cdot
-}</script><p>最后一个例子，比方说有一个四阶张量$\mathbf{T} \in \mathbb{R}^{N \times T \times K \times M}$，我们想要使用之前的投影矩阵将第三维投影至$Q$维，并累加第二维，然后转置结果中的第一维和最后一维，最终得到张量$\mathbf C \in \mathbb R^{M \times Q \times N}$。<code>einsum</code>可以非常简洁地表达这一切：</p>
-<script type="math/tex; mode=display">
-{\huge {\color{SeaGreen} C_{mqn}}
-=\sum_{t} \sum_{k}{\color{ProcessBlue} T_{ntkm} {\color{Lavender} W_{kq}}}
-= {\color{ProcessBlue} T_{ntkm}} {\color{Lavender} W_{kq}} \cdot
-}</script><p>注意，我们通过交换下标$n$和$m$（$C_{mqn}$而不是$C_nqm$），转置了张量构造结果。</p>
-<h1 id="2-Numpy、PyTorch、TensorFlow中的einsum"><a href="#2-Numpy、PyTorch、TensorFlow中的einsum" class="headerlink" title="2. Numpy、PyTorch、TensorFlow中的einsum"></a>2. Numpy、PyTorch、TensorFlow中的einsum</h1><p><code>einsum</code>在<a href="https://link.zhihu.com/?target=https%3A//docs.scipy.org/doc/numpy/reference/generated/numpy.einsum.html">numpy</a>中实现为<code>np.einsum</code>，在<a href="https://link.zhihu.com/?target=http%3A//pytorch.org/docs/master/torch.html%3Fhighlight%3Dtorch%20max%23torch.einsum">PyTorch</a>中实现为<code>torch.einsum</code>，在<a href="https://link.zhihu.com/?target=https%3A//www.tensorflow.org/api_docs/python/tf/einsum">TensorFlow</a>中实现为<code>tf.einsum</code>，均使用一致的签名<code>einsum(equation, operands)</code>，其中<code>equation</code>是表示爱因斯坦求和约定的字符串，而<code>operands</code>则是张量序列（在numpy和TensorFlow中是变长参数列表，而在PyTorch中是列表）。例如，我们的第一个例子，$c_j = \sum{i}\sum{k} A_{ik}B_{kj}$写成<code>equation</code>字符串就是<code>ik,kj -&gt; j</code>。注意这里<code>(i, j, k)</code>的命名是任意的，但需要一致。</p>
-<p><code>PyTorch</code>和<code>TensorFlow</code>像<code>numpy</code>支持<code>einsum</code>的好处之一是einsum可以用于神经网络架构的任意计算图，并且可以反向传播。典型的<code>einsum</code>调用格式如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = numpy.einsum(<span class="string">&quot;ij,ijk,ij-&gt;ik&quot;</span>, arg1, arg2, arg3)</span><br></pre></td></tr></table></figure>
-<script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}{result}}
-= \text{einsum}("
-{\color{Red}{\Box\Box}},\ {\color{ProcessBlue}{\Box\Box\Box}},\ {\color{Lavender}{\Box\Box}}
-", {\color{Red} {arg1}},\ {\color{ProcessBlue}{arg2}},\ {\color{Lavender}{agr3}} )
-}</script><p>上式中$\Box$是占位符，表示张量维度。上面的例子中，<code>arg1</code>和<code>arg3</code>是矩阵，<code>arg2</code>是二阶张量，这一<code>einsum</code>运算的结果（<strong>result</strong>）是矩阵。注意<code>einsum</code>处理的是可变数量的输入。在上面的例子中，<code>einsum</code>指定了三个参数之上的操作，但它同样可以用在牵涉一个参数、两个参数、三个以上参数的操作上。学习<code>einsum</code>的最佳途径是通过学习一些例子，所以下面我们将展示一下，在许多深度学习模型中常用的库函数，用<code>einsum</code>该如何表达（以<code>PyTorch</code>为例）。</p>
-<h2 id="2-1-矩阵转置"><a href="#2-1-矩阵转置" class="headerlink" title="2.1 矩阵转置"></a>2.1 矩阵转置</h2><script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}B_{ji} = {\color{Lavender}A_{ij}}}}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij-&gt;ji&#x27;</span>, [a])</span><br><span class="line">tensor([[ <span class="number">0.</span>,  <span class="number">3.</span>],</span><br><span class="line">        [ <span class="number">1.</span>,  <span class="number">4.</span>],</span><br><span class="line">        [ <span class="number">2.</span>,  <span class="number">5.</span>]])</span><br></pre></td></tr></table></figure>
-<h2 id="2-2-求和"><a href="#2-2-求和" class="headerlink" title="2.2 求和"></a>2.2 求和</h2><script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}b} =\sum_{i}\sum_{j}  {\color{Lavender}A_{ij}}}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij-&gt;&#x27;</span>, [a])</span><br><span class="line">tensor(<span class="number">15.</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="2-3-列求和"><a href="#2-3-列求和" class="headerlink" title="2.3 列求和"></a>2.3 列求和</h2><script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}b_j} = \sum_{i} {\color{Lavender}A_{ij}}}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij-&gt;j&#x27;</span>, [a])</span><br><span class="line">tensor([ <span class="number">3.</span>,  <span class="number">5.</span>,  <span class="number">7.</span>])</span><br></pre></td></tr></table></figure>
-<h2 id="2-4-行求和"><a href="#2-4-行求和" class="headerlink" title="2.4 行求和"></a>2.4 行求和</h2><script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}b_i} = \sum_{j} {\color{Lavender}A_{ij}}}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij-&gt;i&#x27;</span>, [a])</span><br><span class="line">tensor([  <span class="number">3.</span>,  <span class="number">12.</span>])</span><br></pre></td></tr></table></figure>
-<h2 id="2-5-矩阵-向量相乘"><a href="#2-5-矩阵-向量相乘" class="headerlink" title="2.5 矩阵-向量相乘"></a>2.5 矩阵-向量相乘</h2><script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}C_i} 
-= \sum_{k} {\color{Lavender}A_{ik}} {\color{ProcessBlue}b_k}}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">b = torch.arange(<span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ik,k-&gt;i&#x27;</span>, [a, b])</span><br><span class="line">tensor([  <span class="number">5.</span>,  <span class="number">14.</span>])</span><br></pre></td></tr></table></figure>
-<h2 id="2-6-矩阵-矩阵相乘"><a href="#2-6-矩阵-矩阵相乘" class="headerlink" title="2.6 矩阵-矩阵相乘"></a>2.6 矩阵-矩阵相乘</h2><script type="math/tex; mode=display">
-{\huge{\color{SeaGreen}C_{ij}}
-=\sum_{k} {\color{Lavender}A_{ik} {\color{ProcessBlue}B_{kj}}}
-}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">b = torch.arange(<span class="number">15</span>).reshape(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ik,kj-&gt;ij&#x27;</span>, [a, b])</span><br><span class="line">tensor([[  <span class="number">25.</span>,   <span class="number">28.</span>,   <span class="number">31.</span>,   <span class="number">34.</span>,   <span class="number">37.</span>],</span><br><span class="line">        [  <span class="number">70.</span>,   <span class="number">82.</span>,   <span class="number">94.</span>,  <span class="number">106.</span>,  <span class="number">118.</span>]])</span><br></pre></td></tr></table></figure>
-<h2 id="2-7点积"><a href="#2-7点积" class="headerlink" title="2.7点积"></a>2.7点积</h2><p> 向量:</p>
-<script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}c} 
-= \sum_{i} {\color{Lavender}a_i} {\color{ProcessBlue}b_i}
-}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">3</span>)</span><br><span class="line">b = torch.arange(<span class="number">3</span>,<span class="number">6</span>)  <span class="comment"># [3, 4, 5]</span></span><br><span class="line">torch.einsum(<span class="string">&#x27;i,i-&gt;&#x27;</span>, [a, b])</span><br><span class="line">tensor(<span class="number">14.</span>)</span><br></pre></td></tr></table></figure>
-<p>矩阵：</p>
-<script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}c} 
-= \sum_{i}\sum_{j} {\color{Lavender}A_{ij}} {\color{ProcessBlue}B_{ij}}
-}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">b = torch.arange(<span class="number">6</span>,<span class="number">12</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij,ij-&gt;&#x27;</span>, [a, b])</span><br><span class="line">tensor(<span class="number">145.</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="2-8-哈达玛积-circ"><a href="#2-8-哈达玛积-circ" class="headerlink" title="2.8 哈达玛积$\circ$"></a>2.8 哈达玛积$\circ$</h2><script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}C_{ij}} 
-= {\color{Lavender}A_{ij}} {\color{ProcessBlue}B_{ij}}
-}\\
-{\huge \mathbf{\color{SeaGreen} C} 
-= \mathbf{\color{Lavender}A} \circ \mathbf{\color{ProcessBlue}B}}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">6</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">b = torch.arange(<span class="number">6</span>,<span class="number">12</span>).reshape(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ij,ij-&gt;ij&#x27;</span>, [a, b])</span><br><span class="line">tensor([[  <span class="number">0.</span>,   <span class="number">7.</span>,  <span class="number">16.</span>],</span><br><span class="line">        [ <span class="number">27.</span>,  <span class="number">40.</span>,  <span class="number">55.</span>]])</span><br></pre></td></tr></table></figure>
-<h2 id="2-9-外积"><a href="#2-9-外积" class="headerlink" title="2.9 外积"></a>2.9 外积</h2><script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}C_{ij}} 
-= {\color{Lavender}a_{i}} {\color{ProcessBlue}b_{j}}
-}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = torch.arange(<span class="number">3</span>)</span><br><span class="line">b = torch.arange(<span class="number">3</span>,<span class="number">7</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;i,j-&gt;ij&#x27;</span>, [a, b])</span><br><span class="line">tensor([[  <span class="number">0.</span>,   <span class="number">0.</span>,   <span class="number">0.</span>,   <span class="number">0.</span>],</span><br><span class="line">        [  <span class="number">3.</span>,   <span class="number">4.</span>,   <span class="number">5.</span>,   <span class="number">6.</span>],</span><br><span class="line">        [  <span class="number">6.</span>,   <span class="number">8.</span>,  <span class="number">10.</span>,  <span class="number">12.</span>]])</span><br></pre></td></tr></table></figure>
-<h2 id="2-10-batch矩阵相乘"><a href="#2-10-batch矩阵相乘" class="headerlink" title="2.10 batch矩阵相乘"></a>2.10 batch矩阵相乘</h2><script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}C_{ijl}} 
-= \sum_{k}{\color{Lavender}A_{ijk}} {\color{ProcessBlue}B_{ikl}}
-}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">a = torch.randn(<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>)</span><br><span class="line">b = torch.randn(<span class="number">3</span>,<span class="number">5</span>,<span class="number">3</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ijk,ikl-&gt;ijl&#x27;</span>, [a, b])</span><br><span class="line">tensor([[[ <span class="number">1.0886</span>,  <span class="number">0.0214</span>,  <span class="number">1.0690</span>],</span><br><span class="line">         [ <span class="number">2.0626</span>,  <span class="number">3.2655</span>, -<span class="number">0.1465</span>]],</span><br><span class="line"></span><br><span class="line">        [[-<span class="number">6.9294</span>,  <span class="number">0.7499</span>,  <span class="number">1.2976</span>],</span><br><span class="line">         [ <span class="number">4.2226</span>, -<span class="number">4.5774</span>, -<span class="number">4.8947</span>]],</span><br><span class="line"></span><br><span class="line">        [[-<span class="number">2.4289</span>, -<span class="number">0.7804</span>,  <span class="number">5.1385</span>],</span><br><span class="line">         [ <span class="number">0.8003</span>,  <span class="number">2.9425</span>,  <span class="number">1.7338</span>]]])</span><br></pre></td></tr></table></figure>
-<h2 id="2-11-张量缩约"><a href="#2-11-张量缩约" class="headerlink" title="2.11 张量缩约"></a>2.11 张量缩约</h2><p>batch矩阵相乘是<a href="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Tensor_contraction">张量缩约</a>的一个特例。比方说，我们有两个张量，一个$n$阶张量$\mathbf A \in \mathbb R^{I_1 \times \ldots \times I_n}$，一个$m$阶张量$\mathbf B \in \mathbb R^{J_1 \times \ldots \times J_m}$。举例来说，我们取$n = 4,m = 5$，并假定$I_2=J_3$且$I_3=J_5$。我们可以将这两个张量在这两个维度上相乘（A张量的第2、3维度，B张量的3、5维度），最终得到一个新张量$\mathbf C \in \mathbb R^{I_1 \times I_4 \times J_1 \times J_2 \times J_4}$，如下所示：</p>
-<script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}C_{pstuv}} 
-= \sum_{q} \sum_{r} {\color{Lavender}A_{pqrs}} {\color{ProcessBlue}B_{tuqvr}}
-}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = torch.randn(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>)</span><br><span class="line">b = torch.randn(<span class="number">11</span>,<span class="number">13</span>,<span class="number">3</span>,<span class="number">17</span>,<span class="number">5</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;pqrs,tuqvr-&gt;pstuv&#x27;</span>, [a, b]).shape</span><br><span class="line">torch.Size([<span class="number">2</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">17</span>])</span><br></pre></td></tr></table></figure>
-<h2 id="2-12-双线性变换"><a href="#2-12-双线性变换" class="headerlink" title="2.12 双线性变换"></a>2.12 双线性变换</h2><p>如前所述，<code>einsum</code>可用于超过两个张量的计算。这里举一个这方面的例子，<a href="https://link.zhihu.com/?target=http%3A//pytorch.org/docs/master/nn.html%23torch.nn.Bilinear">双线性变换</a>。</p>
-<script type="math/tex; mode=display">
-{\huge {\color{SeaGreen}D_{ij}} 
-= \sum_{k} \sum_{l}{\color{Lavender}A_{ik}} {\color{ProcessBlue}B_{jkl} {\color{Orange}C_{il}}}
-}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = torch.randn(<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">b = torch.randn(<span class="number">5</span>,<span class="number">3</span>,<span class="number">7</span>)</span><br><span class="line">c = torch.randn(<span class="number">2</span>,<span class="number">7</span>)</span><br><span class="line">torch.einsum(<span class="string">&#x27;ik,jkl,il-&gt;ij&#x27;</span>, [a, b, c])</span><br><span class="line">tensor([[ <span class="number">3.8471</span>,  <span class="number">4.7059</span>, -<span class="number">3.0674</span>, -<span class="number">3.2075</span>, -<span class="number">5.2435</span>],</span><br><span class="line">        [-<span class="number">3.5961</span>, -<span class="number">5.2622</span>, -<span class="number">4.1195</span>,  <span class="number">5.5899</span>,  <span class="number">0.4632</span>]])</span><br></pre></td></tr></table></figure>
-<h1 id="3-案例"><a href="#3-案例" class="headerlink" title="3. 案例"></a>3. 案例</h1><h2 id="3-1-TreeQN"><a href="#3-1-TreeQN" class="headerlink" title="3.1 TreeQN"></a>3.1 TreeQN</h2><p>我曾经在实现<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1710.11417">TreeQN</a>（ arXiv:1710.11417）的等式6时使用了<code>einsum</code>：给定网络层l上的低维状态表示$\mathbf Z_l$和激活$a$上的转换函数$\mathbf W^a$，我们想要计算残差链接的下一层状态表示。</p>
-<script type="math/tex; mode=display">
-{\huge \mathbf z_{l+1}^{a}
-=\mathbf z_l + \tanh(\mathbf W^{a} \mathbf z_l)}</script><p>在实践中，我们想要高效地计算大小为B的batch中的$K$维状态表示$\mathbf z \in \mathbb R^{B\times K}$，并同时计算所有转换函数（即，所有激活A）。我们可以将这些转换函数安排为一个张量$\mathbf W \in \mathbb R^{A\times K\times K}$，并使用<code>einsum</code>高效地计算下一层状态表示。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">random_tensors</span>(<span class="params">shape, num=<span class="number">1</span>, requires_grad=<span class="literal">False</span></span>):</span><br><span class="line">  tensors = [torch.randn(shape, requires_grad=requires_grad) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, num)]</span><br><span class="line">  <span class="keyword">return</span> tensors[<span class="number">0</span>] <span class="keyword">if</span> num == <span class="number">1</span> <span class="keyword">else</span> tensors</span><br><span class="line"></span><br><span class="line"><span class="comment"># 参数</span></span><br><span class="line"><span class="comment"># -- [激活数 x 隐藏层维度]</span></span><br><span class="line">b = random_tensors([<span class="number">5</span>, <span class="number">3</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># -- [激活数 x 隐藏层维度 x 隐藏层维度]</span></span><br><span class="line">W = random_tensors([<span class="number">5</span>, <span class="number">3</span>, <span class="number">3</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">transition</span>(<span class="params">zl</span>):</span><br><span class="line">    <span class="comment"># -- [batch大小 x 激活数 x 隐藏层维度]</span></span><br><span class="line">    <span class="keyword">return</span> zl.unsqueeze(<span class="number">1</span>) + F.tanh(torch.einsum(<span class="string">&quot;bk,aki-&gt;bai&quot;</span>, [zl, W]) + b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机取样仿造输入</span></span><br><span class="line"><span class="comment"># -- [batch大小 x 隐藏层维度]</span></span><br><span class="line">zl = random_tensors([<span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">transition(zl)</span><br></pre></td></tr></table></figure>
-<h2 id="3-2-注意力"><a href="#3-2-注意力" class="headerlink" title="3.2 注意力"></a>3.2 注意力</h2><p>让我们再看一个使用<code>einsum</code>的真实例子，实现<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1509.06664">注意力机制</a>的等式11-13（arXiv:1509.06664）：</p>
-<script type="math/tex; mode=display">
-{\huge \mathbf M_t 
-= \tanh(\mathbf W^y \mathbf Y + (\mathbf W^h \mathbf h_t + \mathbf W^r \mathbf r_{t-1})\otimes \mathbf e_L)\qquad \mathbf M_t\in \mathbb R^{k\times L}}\\
-{\huge \alpha_t 
-= \text{softmax}(\mathbf w^T \mathbf M_t)\qquad \mathbf \alpha_t\in \mathbb R^{ L}}\\
-{\huge \mathbf r_t 
-= \mathbf Y \alpha_{t}^{T}+\tanh(\mathbf W^t \mathbf r_{t-1})\qquad \mathbf r_t\in\mathbb R^{k}}\\</script><p>用传统写法实现这些可要费不少力气，特别是考虑batch实现。<code>einsum</code>是我们的救星！</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参数</span></span><br><span class="line"><span class="comment"># -- [隐藏层维度]</span></span><br><span class="line">bM, br, w = random_tensors([<span class="number">7</span>], num=<span class="number">3</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># -- [隐藏层维度 x 隐藏层维度]</span></span><br><span class="line">WY, Wh, Wr, Wt = random_tensors([<span class="number">7</span>, <span class="number">7</span>], num=<span class="number">4</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意力机制的单次应用</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">attention</span>(<span class="params">Y, ht, rt1</span>):</span><br><span class="line">    <span class="comment"># -- [batch大小 x 隐藏层维度]</span></span><br><span class="line">    tmp = torch.einsum(<span class="string">&quot;ik,kl-&gt;il&quot;</span>, [ht, Wh]) + torch.einsum(<span class="string">&quot;ik,kl-&gt;il&quot;</span>, [rt1, Wr])</span><br><span class="line">    Mt = F.tanh(torch.einsum(<span class="string">&quot;ijk,kl-&gt;ijl&quot;</span>, [Y, WY]) + tmp.unsqueeze(<span class="number">1</span>).expand_as(Y) + bM)</span><br><span class="line">    <span class="comment"># -- [batch大小 x 序列长度]</span></span><br><span class="line">    at = F.softmax(torch.einsum(<span class="string">&quot;ijk,k-&gt;ij&quot;</span>, [Mt, w]))</span><br><span class="line">    <span class="comment"># -- [batch大小 x 隐藏层维度]</span></span><br><span class="line">    rt = torch.einsum(<span class="string">&quot;ijk,ij-&gt;ik&quot;</span>, [Y, at]) + F.tanh(torch.einsum(<span class="string">&quot;ij,jk-&gt;ik&quot;</span>, [rt1, Wt]) + br)</span><br><span class="line">    <span class="comment"># -- [batch大小 x 隐藏层维度], [batch大小 x 序列维度]</span></span><br><span class="line">    <span class="keyword">return</span> rt, at</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取样仿造输入</span></span><br><span class="line"><span class="comment"># -- [batch大小 x 序列长度 x 隐藏层维度]</span></span><br><span class="line">Y = random_tensors([<span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>])</span><br><span class="line"><span class="comment"># -- [batch大小 x 隐藏层维度]</span></span><br><span class="line">ht, rt1 = random_tensors([<span class="number">3</span>, <span class="number">7</span>], num=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">rt, at = attention(Y, ht, rt1)</span><br></pre></td></tr></table></figure>
-<h1 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h1><p><code>einsum</code>是<strong>一个函数走天下</strong>，是处理各种张量操作的瑞士军刀。话虽如此，<code>einsum</code>满足你一切需要显然夸大其词了。从上面的真实用例可以看到，我们仍然需要在<code>einsum</code>之外应用非线性和构造额外维度（<code>unsqueeze</code>）。类似地，分割、连接、索引张量仍然需要应用其他库函数。</p>
-<p>使用<code>einsum</code>的麻烦之处是你需要手动实例化参数，操心它们的初始化，并在模型中注册这些参数。不过我仍然强烈建议你在实现模型时，考虑下有哪些情况适合使用<code>einsum</code>.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/12/einsum-1/" data-id="clae1v7pr00007ckwelepaf0f" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/11/12/hello-world/" class="article-date">
-  <time datetime="2022-11-12T04:59:25.736Z" itemprop="datePublished">2022-11-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          忘记Sql密码怎么办
         
+      </div>
+    </a>
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/11/12/hello-world/">Hello World</a>
-    </h1>
   
+    <a href="/2022/11/12/einsum-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">einsum满足你一切需要：深度学习中的爱因斯坦求和约定</div>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/12/hello-world/" data-id="clae1v7pv00017ckwfm5q1ng8" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-
 
 </section>
         
