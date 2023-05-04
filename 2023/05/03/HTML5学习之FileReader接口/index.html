@@ -17,371 +17,368 @@ if (window.localStorage.getItem('theme-mode') === 'dark') document.documentEleme
 }</style><style>:root {
   --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
   --light-background: url('/img/bk.jpg');
-}</style><meta name="generator" content="Hexo 7.0.0-rc1"></head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem"><a class="navBlock" href="/about"><span class="navItemTitle">About</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>HTML5学习之FileReader接口</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2023-05-03T15:17:03.000Z" id="date"> 2023-05-03</time></div></span><br><span>Last Update: <div class="control"><time datetime="2023-05-03T16:48:41.792Z" id="updated"> 2023-05-04</time></div></span></div></div><hr><div id="post-content"><p>FileReader主要用于将文件内容读入内存，通过一系列异步接口，可以在主线程中访问本地文件。</p>
+}</style><meta name="generator" content="Hexo 7.0.0-rc1"></head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem"><a class="navBlock" href="/about"><span class="navItemTitle">About</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>HTML5学习之FileReader接口</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2023-05-03T15:17:03.000Z" id="date"> 2023-05-03</time></div></span><br><span>Last Update: <div class="control"><time datetime="2023-05-04T10:44:29.988Z" id="updated"> 2023-05-04</time></div></span></div></div><hr><div id="post-content"><p>FileReader主要用于将文件内容读入内存，通过一系列异步接口，可以在主线程中访问本地文件。</p>
 <blockquote>
-<p>  使用FileReader对象，web应用程序可以异步的读取存储在用户计算机上的文件(或者原始数据缓冲)内容，可以使用File对象或者Blob对象来指定所要处理的文件或数据。</p>
+<p>使用FileReader对象，web应用程序可以异步的读取存储在用户计算机上的文件(或者原始数据缓冲)内容，可以使用File对象或者Blob对象来指定所要处理的文件或数据。</p>
 </blockquote>
 <span id="more"></span>
-<h1 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h1><p>   <code>var reader = new FileReader()</code></p>
-<h1 id="FileReader接口的方法"><a href="#FileReader接口的方法" class="headerlink" title="FileReader接口的方法"></a>FileReader接口的方法</h1><p>   FileReader接口有4个方法，其中3个用来读取文件，另一个用来中断读取。无论读取成功或失败，方法并不会返回读取结果，这一结果存储在result属性中。</p>
-<div class="table-container">
+<h1 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h1>
+<p><code>var reader = new FileReader()</code></p>
+<h1 id="filereader接口的方法"><a href="#FileReader接口的方法" class="headerlink" title="FileReader接口的方法"></a>FileReader接口的方法</h1>
+<p>FileReader接口有4个方法，其中3个用来读取文件，另一个用来中断读取。无论读取成功或失败，方法并不会返回读取结果，这一结果存储在result属性中。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>方法名</th>
 <th>参数</th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>readAsBinaryString</td>
 <td>file</td>
 <td>将文件读取为二进制编码</td>
 </tr>
-<tr>
+<tr class="even">
 <td>readAsText</td>
 <td>file,[encoding]</td>
 <td>将文件读取为文本</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>readAsDataURL</td>
 <td>file</td>
 <td>将文件读取为DataURL</td>
 </tr>
-<tr>
+<tr class="even">
 <td>abort</td>
 <td>(none)</td>
 <td>终端读取操作</td>
 </tr>
 </tbody>
 </table>
-</div>
-<h1 id="FileReader接口事件"><a href="#FileReader接口事件" class="headerlink" title="FileReader接口事件"></a>FileReader接口事件</h1><p>   FileReader接口包含了一套完整的事件模型，用于捕获读取文件时的状态。</p>
-<div class="table-container">
+<h1 id="filereader接口事件"><a href="#FileReader接口事件" class="headerlink" title="FileReader接口事件"></a>FileReader接口事件</h1>
+<p>FileReader接口包含了一套完整的事件模型，用于捕获读取文件时的状态。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>事件</th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>onabort</td>
 <td>中断</td>
 </tr>
-<tr>
+<tr class="even">
 <td>onerror</td>
 <td>出错</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>onloadstart</td>
 <td>开始</td>
 </tr>
-<tr>
+<tr class="even">
 <td>onprogress</td>
 <td>正在读取</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>onload</td>
 <td>成功读取</td>
 </tr>
-<tr>
+<tr class="even">
 <td>onloadend</td>
 <td>读取完成，无论成功失败</td>
 </tr>
 </tbody>
 </table>
-</div>
-<h1 id="FileReader接口的使用"><a href="#FileReader接口的使用" class="headerlink" title="FileReader接口的使用"></a>FileReader接口的使用</h1>   <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">var</span> result=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;result&quot;</span>);</span><br><span class="language-javascript"><span class="hljs-keyword">var</span> file=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;file&quot;</span>);</span><br><span class="language-javascript"><span class="hljs-comment">//判断浏览器是否支持FileReader接口</span></span><br><span class="language-javascript"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-title class_">FileReader</span> == <span class="hljs-string">&#x27;undefined&#x27;</span>)&#123;</span><br><span class="language-javascript">    result.<span class="hljs-property">InnerHTML</span>=<span class="hljs-string">&quot;&lt;p&gt;你的浏览器不支持FileReader接口！&lt;/p&gt;&quot;</span>;</span><br><span class="language-javascript">    <span class="hljs-comment">//使选择控件不可操作</span></span><br><span class="language-javascript">    file.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;disabled&quot;</span>,<span class="hljs-string">&quot;disabled&quot;</span>);</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">readAsDataURL</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">    <span class="hljs-comment">//检验是否为图像文件</span></span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> file = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;file&quot;</span>).<span class="hljs-property">files</span>[<span class="hljs-number">0</span>];</span><br><span class="language-javascript">    <span class="hljs-keyword">if</span>(!<span class="hljs-regexp">/image\/\w+/</span>.<span class="hljs-title function_">test</span>(file.<span class="hljs-property">type</span>))&#123;</span><br><span class="language-javascript">        <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;看清楚，这个需要图片！&quot;</span>);</span><br><span class="language-javascript">        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileReader</span>();</span><br><span class="language-javascript">    <span class="hljs-comment">//将文件以Data URL形式读入页面</span></span><br><span class="language-javascript">    reader.<span class="hljs-title function_">readAsDataURL</span>(file);</span><br><span class="language-javascript">    reader.οnlοad=<span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)&#123;</span><br><span class="language-javascript">        <span class="hljs-keyword">var</span> result=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;result&quot;</span>);</span><br><span class="language-javascript">        <span class="hljs-comment">//显示文件</span></span><br><span class="language-javascript">        result.<span class="hljs-property">innerHTML</span>=<span class="hljs-string">&#x27;&lt;img src=&quot;&#x27;</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">result</span> +<span class="hljs-string">&#x27;&quot; alt=&quot;&quot; /&gt;&#x27;</span>;</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">readAsBinaryString</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> file = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;file&quot;</span>).<span class="hljs-property">files</span>[<span class="hljs-number">0</span>];</span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileReader</span>();</span><br><span class="language-javascript">    <span class="hljs-comment">//将文件以二进制形式读入页面</span></span><br><span class="language-javascript">    reader.<span class="hljs-title function_">readAsBinaryString</span>(file);</span><br><span class="language-javascript">    reader.οnlοad=<span class="hljs-keyword">function</span>(<span class="hljs-params">f</span>)&#123;</span><br><span class="language-javascript">        <span class="hljs-keyword">var</span> result=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;result&quot;</span>);</span><br><span class="language-javascript">        <span class="hljs-comment">//显示文件</span></span><br><span class="language-javascript">        result.<span class="hljs-property">innerHTML</span>=<span class="hljs-variable language_">this</span>.<span class="hljs-property">result</span>;</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">readAsText</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> file = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;file&quot;</span>).<span class="hljs-property">files</span>[<span class="hljs-number">0</span>];</span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileReader</span>();</span><br><span class="language-javascript">    <span class="hljs-comment">//将文件以文本形式读入页面</span></span><br><span class="language-javascript">    reader.<span class="hljs-title function_">readAsText</span>(file);</span><br><span class="language-javascript">    reader.οnlοad=<span class="hljs-keyword">function</span>(<span class="hljs-params">f</span>)&#123;</span><br><span class="language-javascript">        <span class="hljs-keyword">var</span> result=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;result&quot;</span>);</span><br><span class="language-javascript">        <span class="hljs-comment">//显示文件</span></span><br><span class="language-javascript">        result.<span class="hljs-property">innerHTML</span>=<span class="hljs-variable language_">this</span>.<span class="hljs-property">result</span>;</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>请选择一个文件：<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;file&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;读取图像&quot;</span> <span class="hljs-attr">οnclick</span>=<span class="hljs-string">&quot;readAsDataURL()&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;读取二进制数据&quot;</span> <span class="hljs-attr">οnclick</span>=<span class="hljs-string">&quot;readAsBinaryString()&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;读取文本文件&quot;</span> <span class="hljs-attr">οnclick</span>=<span class="hljs-string">&quot;readAsText()&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;result&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;result&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<h1 id="HTML5的一些基础知识"><a href="#HTML5的一些基础知识" class="headerlink" title="HTML5的一些基础知识"></a>HTML5的一些基础知识</h1><div class="table-container">
+<h1 id="filereader接口的使用"><a href="#FileReader接口的使用" class="headerlink" title="FileReader接口的使用"></a>FileReader接口的使用</h1>
+<p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">var</span> result=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;result&quot;</span>);</span><br><span class="language-javascript"><span class="hljs-keyword">var</span> file=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;file&quot;</span>);</span><br><span class="language-javascript"><span class="hljs-comment">//判断浏览器是否支持FileReader接口</span></span><br><span class="language-javascript"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> <span class="hljs-title class_">FileReader</span> == <span class="hljs-string">&#x27;undefined&#x27;</span>)&#123;</span><br><span class="language-javascript">    result.<span class="hljs-property">InnerHTML</span>=<span class="hljs-string">&quot;&lt;p&gt;你的浏览器不支持FileReader接口！&lt;/p&gt;&quot;</span>;</span><br><span class="language-javascript">    <span class="hljs-comment">//使选择控件不可操作</span></span><br><span class="language-javascript">    file.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&quot;disabled&quot;</span>,<span class="hljs-string">&quot;disabled&quot;</span>);</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">readAsDataURL</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">    <span class="hljs-comment">//检验是否为图像文件</span></span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> file = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;file&quot;</span>).<span class="hljs-property">files</span>[<span class="hljs-number">0</span>];</span><br><span class="language-javascript">    <span class="hljs-keyword">if</span>(!<span class="hljs-regexp">/image\/\w+/</span>.<span class="hljs-title function_">test</span>(file.<span class="hljs-property">type</span>))&#123;</span><br><span class="language-javascript">        <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;看清楚，这个需要图片！&quot;</span>);</span><br><span class="language-javascript">        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileReader</span>();</span><br><span class="language-javascript">    <span class="hljs-comment">//将文件以Data URL形式读入页面</span></span><br><span class="language-javascript">    reader.<span class="hljs-title function_">readAsDataURL</span>(file);</span><br><span class="language-javascript">    reader.οnlοad=<span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)&#123;</span><br><span class="language-javascript">        <span class="hljs-keyword">var</span> result=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;result&quot;</span>);</span><br><span class="language-javascript">        <span class="hljs-comment">//显示文件</span></span><br><span class="language-javascript">        result.<span class="hljs-property">innerHTML</span>=<span class="hljs-string">&#x27;&lt;img src=&quot;&#x27;</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">result</span> +<span class="hljs-string">&#x27;&quot; alt=&quot;&quot; /&gt;&#x27;</span>;</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">readAsBinaryString</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> file = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;file&quot;</span>).<span class="hljs-property">files</span>[<span class="hljs-number">0</span>];</span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileReader</span>();</span><br><span class="language-javascript">    <span class="hljs-comment">//将文件以二进制形式读入页面</span></span><br><span class="language-javascript">    reader.<span class="hljs-title function_">readAsBinaryString</span>(file);</span><br><span class="language-javascript">    reader.οnlοad=<span class="hljs-keyword">function</span>(<span class="hljs-params">f</span>)&#123;</span><br><span class="language-javascript">        <span class="hljs-keyword">var</span> result=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;result&quot;</span>);</span><br><span class="language-javascript">        <span class="hljs-comment">//显示文件</span></span><br><span class="language-javascript">        result.<span class="hljs-property">innerHTML</span>=<span class="hljs-variable language_">this</span>.<span class="hljs-property">result</span>;</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">readAsText</span>(<span class="hljs-params"></span>)&#123;</span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> file = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;file&quot;</span>).<span class="hljs-property">files</span>[<span class="hljs-number">0</span>];</span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileReader</span>();</span><br><span class="language-javascript">    <span class="hljs-comment">//将文件以文本形式读入页面</span></span><br><span class="language-javascript">    reader.<span class="hljs-title function_">readAsText</span>(file);</span><br><span class="language-javascript">    reader.οnlοad=<span class="hljs-keyword">function</span>(<span class="hljs-params">f</span>)&#123;</span><br><span class="language-javascript">        <span class="hljs-keyword">var</span> result=<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;result&quot;</span>);</span><br><span class="language-javascript">        <span class="hljs-comment">//显示文件</span></span><br><span class="language-javascript">        result.<span class="hljs-property">innerHTML</span>=<span class="hljs-variable language_">this</span>.<span class="hljs-property">result</span>;</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">&#125;</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span>请选择一个文件：<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;file&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;读取图像&quot;</span> <span class="hljs-attr">οnclick</span>=<span class="hljs-string">&quot;readAsDataURL()&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;读取二进制数据&quot;</span> <span class="hljs-attr">οnclick</span>=<span class="hljs-string">&quot;readAsBinaryString()&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;读取文本文件&quot;</span> <span class="hljs-attr">οnclick</span>=<span class="hljs-string">&quot;readAsText()&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;result&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;result&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure></p>
+<h1 id="html5的一些基础知识"><a href="#HTML5的一些基础知识" class="headerlink" title="HTML5的一些基础知识"></a>HTML5的一些基础知识</h1>
 <table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 82%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>分类</th>
 <th>HTML5新增元素预览</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>结构元素</td>
 <td>section, article, aside, header, hgroup, footer, nav, figure</td>
 </tr>
-<tr>
+<tr class="even">
 <td>其他元素</td>
-<td>video, audio, embed, mark, progress, meter, time, ruby, rt, rp, whr, canvas, command, details, datalist, datagrid, keygen, output, source, menu</td>
+<td>video, audio, embed, mark, progress, meter, time, ruby, rt, rp, whr,
+canvas, command, details, datalist, datagrid, keygen, output, source,
+menu</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>input类型元素</td>
 <td>email, url, number, range, Date Pickers</td>
 </tr>
 </tbody>
 </table>
-</div>
-<hr>
-<div class="table-container">
+<hr />
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>HTML5 新增属性</th>
 <th>作用</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>contentEditable</td>
 <td>可编辑属性</td>
 </tr>
-<tr>
+<tr class="even">
 <td>designMode</td>
 <td>仅仅js调用编辑</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>hidden</td>
 <td>隐藏元素</td>
 </tr>
-<tr>
+<tr class="even">
 <td>spellcheck</td>
 <td>拼写语法检查</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>tabindex</td>
 <td>按TAB键顺序改变</td>
 </tr>
 </tbody>
 </table>
-</div>
-<hr>
-<div class="table-container">
+<hr />
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th><strong>HTML常用标签</strong></th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>&lt;b&gt;</code></td>
 <td>粗体文本</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;big</code></td>
 <td>大号字体</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&lt;em&gt;</code></td>
 <td>着重文字</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;i&gt;</code></td>
 <td>斜体字</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&lt;small&gt;</code></td>
 <td>小号字</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;strong&gt;</code></td>
 <td>加重语气</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&lt;sub&gt;</code></td>
 <td>下标字</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;sup&gt;</code></td>
 <td>上标字</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&lt;ins&gt;</code></td>
 <td>插入字</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;del&gt;</code></td>
 <td>删除字</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&lt;link&gt;</code></td>
 <td>外部样式表标签</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;style&gt;</code></td>
 <td>内部样式表标签</td>
 </tr>
 </tbody>
 </table>
-</div>
-<hr>
-<div class="table-container">
+<hr />
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>属性</th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>rel=”stylesheet”</td>
+<tr class="odd">
+<td>rel="stylesheet"</td>
 <td>外部样式表</td>
 </tr>
-<tr>
-<td>type=”text/css”</td>
+<tr class="even">
+<td>type="text/css"</td>
 <td>引入文档的类型</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>margin-left</td>
 <td>边距</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Background</td>
 <td>背景图片</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Bgcolor</td>
 <td>背景颜色</td>
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>列表</strong></p>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>标签</th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>&lt;ol&gt;</code></td>
 <td>有序列表、属性：A, a, l, i, start</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;ul&gt;</code></td>
 <td>无序列表、属性：disc, circle, square</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&lt;li&gt;</code></td>
 <td>列表项</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;dl&gt;</code></td>
 <td>列表</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&lt;dt&gt;</code></td>
 <td>列表项</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;dd&gt;</code></td>
 <td>描述</td>
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>表单标签</strong></p>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>标签</th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>&lt;form&gt;</code></td>
 <td>表单</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;input&gt;</code></td>
 <td>输入域</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&lt;textarea&gt;</code></td>
 <td>文本域</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;label&gt;</code></td>
 <td>控制标签</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&lt;fieldset&gt;</code></td>
 <td>定义域</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;legend&gt;</code></td>
 <td>域的标题</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&lt;select&gt;</code></td>
 <td>选择列表</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;optgroup&gt;</code></td>
 <td>选项组</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&lt;option&gt;</code></td>
 <td>下拉列表的选项</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;button&gt;</code></td>
 <td>按钮</td>
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>表单新增属性</strong></p>
-<div class="table-container">
 <table>
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 54%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>新增属性</th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>标签的<code>control</code></td>
 <td>标签内部表单元素的访问和改变</td>
 </tr>
-<tr>
+<tr class="even">
 <td>文本框的<code>placeholder</code></td>
 <td>提示文字，默认衬底</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>文本框的<code>list</code></td>
 <td>带输入的下拉菜单，紧跟<code>&lt;datalist&gt;</code>标签</td>
 </tr>
-<tr>
+<tr class="even">
 <td>文本框的<code>AutoComplete</code></td>
 <td>自动完成</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>文本框的<code>SelectionDirection</code></td>
 <td>获取用户选取文字方向</td>
 </tr>
-<tr>
+<tr class="even">
 <td>文本框的<code>pattern</code></td>
 <td>对于输入字符进行正则表达的判断</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>复选框的<code>indeterminate</code></td>
 <td>该属性用于初始化，表明尚未明确状态</td>
 </tr>
-<tr>
+<tr class="even">
 <td>image提交按钮的<code>height</code>和<code>width</code></td>
 <td>控制图片按钮的大小</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2023/05/03/%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84googletest%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/">← Next 一些常用的googletest命令行参数</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/05/03/CSS%E5%9F%BA%E7%A1%80/">CSS基础 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="To Catalog">≡</a><a id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">冯露露</a></h1><div id="description"><p>分享兴趣爱好的技术博客</p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">创建实例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FileReader%E6%8E%A5%E5%8F%A3%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">FileReader接口的方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FileReader%E6%8E%A5%E5%8F%A3%E4%BA%8B%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">FileReader接口事件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FileReader%E6%8E%A5%E5%8F%A3%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">FileReader接口的使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTML5%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">5.</span> <span class="toc-text">HTML5的一些基础知识</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {code.findCode();
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2023/05/03/%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84googletest%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/">← Next 一些常用的googletest命令行参数</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/05/03/CSS%E5%9F%BA%E7%A1%80/">CSS基础 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="To Catalog">≡</a><a id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">冯露露</a></h1><div id="description"><p>分享兴趣爱好的技术博客</p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="toc-text">创建实例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#filereader%E6%8E%A5%E5%8F%A3%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">FileReader接口的方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#filereader%E6%8E%A5%E5%8F%A3%E4%BA%8B%E4%BB%B6"><span class="toc-text">FileReader接口事件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#filereader%E6%8E%A5%E5%8F%A3%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">FileReader接口的使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#html5%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">HTML5的一些基础知识</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {code.findCode();
 document.querySelector('.lg-container')?.remove()
 lightGallery(document.getElementById('post-bg'), {
   plugins: [lgZoom,lgThumbnail],
