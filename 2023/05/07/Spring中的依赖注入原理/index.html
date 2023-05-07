@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="zh-CN" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Spring中的依赖注入原理 | 海花号</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy","copyFinish":"copied","expand":"expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/brands.min.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/fontawesome.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+@font-face {
+ font-family: 'Font Awesome 6 Brands';
+ src: local('Font Awesome 6 Brands'), url('/lib/fontawesome/fa-brands.woff2') format('woff2');
+}
+@font-face {
+ font-family: 'Font Awesome 6 Free';
+ src: local('Font Awesome 6 Free'), url('/lib/fontawesome/fa-regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><meta name="generator" content="Hexo 7.0.0-rc1"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem"><a class="navBlock" href="/about"><span class="navItemTitle">About</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>Spring中的依赖注入原理</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2023-05-07T04:27:11.000Z" id="date"> 2023-05-07</time></div></span><br><span>Last Update: <div class="control"><time datetime="2023-05-07T04:31:35.818Z" id="updated"> 2023-05-07</time></div></span></div></div><hr><div id="post-content"><h1 id="ioc的原理"><a href="#0.-IOC的原理" class="headerlink" title="0.-IOC的原理"></a>0. IOC的原理</h1>
+<h2 id="三个重要的技术"><a href="#0.1-三个重要的技术：" class="headerlink" title="0.1-三个重要的技术："></a>0.1 三个重要的技术：</h2>
+<ul>
+<li><strong>工厂模式</strong></li>
+<li><strong>反射</strong></li>
+<li><strong>xml解析</strong></li>
+</ul>
+<h2 id="工作原理"><a href="#0.2-工作原理" class="headerlink" title="0.2-工作原理"></a>0.2 工作原理</h2>
+<p>通过解析xml配置文件，将文件中的参数值提取出来，并通过字节码的反射机制，实现类的生成。由于类的生成是受到工厂模式<code>BeanFactory</code>控制，因此可以直接输出所需的类。从而通过配置文件来降低<strong>类与类</strong>之间的耦合关系。</p>
+<span id="more"></span>
+<h1 id="基于构造函数的依赖注入"><a href="#1.-基于构造函数的依赖注入" class="headerlink" title="1.-基于构造函数的依赖注入"></a>1. 基于构造函数的依赖注入</h1>
+<p>当容器调用带有一组参数的类构造函数时，基于构造函数的 DI
+就完成了，其中每个参数代表一个对其他类的依赖。</p>
+<p><strong>示例</strong></p>
+<p><strong>TextEditor.java</strong>文件，它采用有参构造，构造时注入<code>spellChecker</code>类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.tutorialspoint;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TextEditor</span> {<br>   <span class="hljs-keyword">private</span> SpellChecker spellChecker;<br>   <span class="hljs-keyword">public</span> <span class="hljs-title function_">TextEditor</span><span class="hljs-params">(SpellChecker spellChecker)</span> {<br>      System.out.println(<span class="hljs-string">"Inside TextEditor constructor."</span> );<br>      <span class="hljs-built_in">this</span>.spellChecker = spellChecker;<br>   }<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">spellCheck</span><span class="hljs-params">()</span> {<br>      spellChecker.checkSpelling();<br>   }<br>}<br></code></pre></td></tr></table></figure>
+<p><strong>SpellCheck.java</strong>文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.tutorialspoint;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpellChecker</span> {<br>   <span class="hljs-keyword">public</span> <span class="hljs-title function_">SpellChecker</span><span class="hljs-params">()</span>{<br>      System.out.println(<span class="hljs-string">"Inside SpellChecker constructor."</span> );<br>   }<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkSpelling</span><span class="hljs-params">()</span> {<br>      System.out.println(<span class="hljs-string">"Inside checkSpelling."</span> );<br>   } <br>}<br></code></pre></td></tr></table></figure>
+<p><strong>MainApp.java</strong> 文件的内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.tutorialspoint;<br><span class="hljs-keyword">import</span> org.springframework.context.ApplicationContext;<br><span class="hljs-keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainApp</span> {<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {<br>      <span class="hljs-type">ApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> <br>             <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassPathXmlApplicationContext</span>(<span class="hljs-string">"Beans.xml"</span>);%依赖解析<br>      <span class="hljs-type">TextEditor</span> <span class="hljs-variable">te</span> <span class="hljs-operator">=</span> (TextEditor) context.getBean(<span class="hljs-string">"textEditor"</span>);<br>      te.spellCheck();<br>   }<br>}<br></code></pre></td></tr></table></figure>
+<p>下面是配置文件 <strong>Beans.xml</strong>
+的内容，它有基于构造函数注入的配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">"1.0"</span> encoding=<span class="hljs-string">"UTF-8"</span>?&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans"</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans</span></span><br><span class="hljs-string"><span class="hljs-tag">    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"</span>&gt;</span><br><br>   <span class="hljs-comment">&lt;!-- Definition for textEditor bean --&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"textEditor"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.tutorialspoint.TextEditor"</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"spellChecker"</span>/&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br>   <span class="hljs-comment">&lt;!-- Definition for spellChecker bean --&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"spellChecker"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.tutorialspoint.SpellChecker"</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>当你完成了创建源和 bean
+配置文件后，让我们开始运行应用程序。如果你的应用程序运行顺利的话，那么将会输出下述所示消息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">Inside SpellChecker constructor.<br>Inside TextEditor constructor.<br>Inside checkSpelling.<br></code></pre></td></tr></table></figure>
+<h2 id="多个构造参数的配置文件"><a href="#1.1-多个构造参数的配置文件" class="headerlink" title="1.1-多个构造参数的配置文件"></a>1.1 多个构造参数的配置文件</h2>
+<p>类Foo中有两个构造参数</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">beans</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"foo"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"x.y.Foo"</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"bar"</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"baz"</span>/&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"bar"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"x.y.Bar"</span>/&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"baz"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"x.y.Baz"</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h2 id="type显式指定属性"><a href="#1.2-<code>type</code>显式指定属性" class="headerlink" title="1.2-<code>type</code>显式指定属性"></a>1.2 <code>type</code>显式指定属性</h2>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">beans</span>&gt;</span><br><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"exampleBean"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"examples.ExampleBean"</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"int"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"2001"</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"java.lang.String"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Zara"</span>/&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h2 id="索引参数"><a href="#1.3-索引参数" class="headerlink" title="1.3-索引参数"></a>1.3 索引参数</h2>
+<p>最后并且也是最好的传递构造函数参数的方式，使用<code>index</code>
+属性来显式的指定构造函数参数的索引。下面是基于索引为 0
+的例子，如下所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">beans</span>&gt;</span><br><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"exampleBean"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"examples.ExampleBean"</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">index</span>=<span class="hljs-string">"0"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"2001"</span>/&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">index</span>=<span class="hljs-string">"1"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Zara"</span>/&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>最后，如果你想要向一个对象传递一个引用，你需要使用 标签的
+<strong>ref</strong>
+属性，如果你想要直接传递值，那么你应该使用如上所示的
+<strong>value</strong> 属性。</p>
+<h1 id="基于设值函数的依赖注入"><a href="#2.-基于设值函数的依赖注入" class="headerlink" title="2.-基于设值函数的依赖注入"></a>2. 基于设值函数的依赖注入</h1>
+<p>存在使用setter和getter的注入方式</p>
+<p>下面是 <strong>TextEditor.java</strong> 文件的内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.tutorialspoint;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TextEditor</span> {<br>   <span class="hljs-keyword">private</span> SpellChecker spellChecker;<br>   <span class="hljs-comment">// a setter method to inject the dependency.</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setSpellChecker</span><span class="hljs-params">(SpellChecker spellChecker)</span> {<br>      System.out.println(<span class="hljs-string">"Inside setSpellChecker."</span> );<br>      <span class="hljs-built_in">this</span>.spellChecker = spellChecker;<br>   }<br>   <span class="hljs-comment">// a getter method to return spellChecker</span><br>   <span class="hljs-keyword">public</span> SpellChecker <span class="hljs-title function_">getSpellChecker</span><span class="hljs-params">()</span> {<br>      <span class="hljs-keyword">return</span> spellChecker;<br>   }<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">spellCheck</span><span class="hljs-params">()</span> {<br>      spellChecker.checkSpelling();<br>   }<br>}<br></code></pre></td></tr></table></figure>
+<p>在这里，你需要检查设值函数方法的名称转换。要设置一个变量
+<strong>spellChecker</strong>，我们使用
+<strong>setSpellChecker()</strong> 方法，该方法与 Java POJO
+类非常相似。让我们创建另一个依赖类文件
+<strong>SpellChecker.java</strong> 的内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.tutorialspoint;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpellChecker</span> {<br>   <span class="hljs-keyword">public</span> <span class="hljs-title function_">SpellChecker</span><span class="hljs-params">()</span>{<br>      System.out.println(<span class="hljs-string">"Inside SpellChecker constructor."</span> );<br>   }<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkSpelling</span><span class="hljs-params">()</span> {<br>      System.out.println(<span class="hljs-string">"Inside checkSpelling."</span> );<br>   }  <br>}<br></code></pre></td></tr></table></figure>
+<p>以下是 <strong>MainApp.java</strong> 文件的内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.tutorialspoint;<br><span class="hljs-keyword">import</span> org.springframework.context.ApplicationContext;<br><span class="hljs-keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainApp</span> {<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {<br>      <span class="hljs-type">ApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> <br>             <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassPathXmlApplicationContext</span>(<span class="hljs-string">"Beans.xml"</span>);<br>      <span class="hljs-type">TextEditor</span> <span class="hljs-variable">te</span> <span class="hljs-operator">=</span> (TextEditor) context.getBean(<span class="hljs-string">"textEditor"</span>);<br>      te.spellCheck();<br>   }<br>}<br></code></pre></td></tr></table></figure>
+<p>下面是配置文件 <strong>Beans.xml</strong>
+的内容，该文件有基于设值函数注入的配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">"1.0"</span> encoding=<span class="hljs-string">"UTF-8"</span>?&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans"</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans</span></span><br><span class="hljs-string"><span class="hljs-tag">    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"</span>&gt;</span><br><br>   <span class="hljs-comment">&lt;!-- Definition for textEditor bean --&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"textEditor"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.tutorialspoint.TextEditor"</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"spellChecker"</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"spellChecker"</span>/&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br>   <span class="hljs-comment">&lt;!-- Definition for spellChecker bean --&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"spellChecker"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.tutorialspoint.SpellChecker"</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>你应该注意定义在基于构造函数注入和基于设值函数注入中的 Beans.xml
+文件的区别。唯一的区别就是在基于构造函数注入中，我们使用的是〈bean〉标签中的〈constructor-arg〉元素，而在基于设值函数的注入中，我们使用的是〈bean〉标签中的〈property〉元素。</p>
+<p>第二个你需要注意的点是，如果你要把一个引用传递给一个对象，那么你需要使用
+标签的 <strong>ref</strong>
+属性，而如果你要直接传递一个值，那么你应该使用 <strong>value</strong>
+属性。</p>
+<p>当你完成了创建源和 bean
+配置文件后，让我们开始运行应用程序。如果你的应用程序运行顺利的话，那么将会输出下述所示消息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">Inside SpellChecker constructor.<br>Inside setSpellChecker.<br>Inside checkSpelling.<br></code></pre></td></tr></table></figure>
+<h1 id="注入内部beans"><a href="#3.-注入内部Beans" class="headerlink" title="3.-注入内部Beans"></a>3. 注入内部Beans</h1>
+<p>正如你所知道的 Java
+内部类是在其他类的范围内被定义的，同理，<strong>inner beans</strong>
+是在其他 bean 的范围内定义的
+bean。因此<property></property>或<constructor-arg></constructor-arg>元素中的<bean></bean>元素称为内部bean，如下所示。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">"1.0"</span> encoding=<span class="hljs-string">"UTF-8"</span>?&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans"</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans</span></span><br><span class="hljs-string"><span class="hljs-tag">    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"</span>&gt;</span><br><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"outerBean"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"..."</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"target"</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"innerBean"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"..."</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h1 id="注入集合"><a href="#4.-注入集合" class="headerlink" title="4.-注入集合"></a>4. 注入集合</h1>
+<p>你已经看到了如何使用 <strong>value</strong>
+属性来配置基本数据类型和在你的 bean
+配置文件中使用<code>&lt;property&gt;</code>标签的 <strong>ref</strong>
+属性来配置对象引用。这两种情况下处理奇异值传递给一个 bean。</p>
+<p>现在如果你想传递多个值，如 Java Collection 类型 List、Set、Map 和
+Properties，应该怎么做呢。为了处理这种情况，Spring
+提供了四种类型的集合的配置元素，如下所示：</p>
+<table>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 89%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>元素</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><list></list></td>
+<td>它有助于连线，如注入一列值，允许重复。</td>
+</tr>
+<tr class="even">
+<td><set></set></td>
+<td>它有助于连线一组值，但不能重复。</td>
+</tr>
+<tr class="odd">
+<td><map></map></td>
+<td>它可以用来注入名称-值对的集合，其中名称和值可以是任何类型。</td>
+</tr>
+<tr class="even">
+<td><props></props></td>
+<td>它可以用来注入名称-值对的集合，其中名称和值都是字符串类型。</td>
+</tr>
+</tbody>
+</table>
+<p>你可以使用<code>&lt;list&gt;</code>或<code>&lt;set&gt;</code>来连接任何
+<code>java.util.Collection</code> 的实现或数组。</p>
+<p>你会遇到两种情况（a）传递集合中直接的值（b）传递一个 bean
+的引用作为集合的元素。</p>
+<p>这里是 <strong>JavaCollection.java</strong> 文件的内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.tutorialspoint;<br><span class="hljs-keyword">import</span> java.util.*;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JavaCollection</span> {<br>   List addressList;<br>   Set  addressSet;<br>   Map  addressMap;<br>   Properties addressProp;<br>   <span class="hljs-comment">// a setter method to set List</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setAddressList</span><span class="hljs-params">(List addressList)</span> {<br>      <span class="hljs-built_in">this</span>.addressList = addressList;<br>   }<br>   <span class="hljs-comment">// prints and returns all the elements of the list.</span><br>   <span class="hljs-keyword">public</span> List <span class="hljs-title function_">getAddressList</span><span class="hljs-params">()</span> {<br>      System.out.println(<span class="hljs-string">"List Elements :"</span>  + addressList);<br>      <span class="hljs-keyword">return</span> addressList;<br>   }<br>   <span class="hljs-comment">// a setter method to set Set</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setAddressSet</span><span class="hljs-params">(Set addressSet)</span> {<br>      <span class="hljs-built_in">this</span>.addressSet = addressSet;<br>   }<br>   <span class="hljs-comment">// prints and returns all the elements of the Set.</span><br>   <span class="hljs-keyword">public</span> Set <span class="hljs-title function_">getAddressSet</span><span class="hljs-params">()</span> {<br>      System.out.println(<span class="hljs-string">"Set Elements :"</span>  + addressSet);<br>      <span class="hljs-keyword">return</span> addressSet;<br>   }<br>   <span class="hljs-comment">// a setter method to set Map</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setAddressMap</span><span class="hljs-params">(Map addressMap)</span> {<br>      <span class="hljs-built_in">this</span>.addressMap = addressMap;<br>   }  <br>   <span class="hljs-comment">// prints and returns all the elements of the Map.</span><br>   <span class="hljs-keyword">public</span> Map <span class="hljs-title function_">getAddressMap</span><span class="hljs-params">()</span> {<br>      System.out.println(<span class="hljs-string">"Map Elements :"</span>  + addressMap);<br>      <span class="hljs-keyword">return</span> addressMap;<br>   }<br>   <span class="hljs-comment">// a setter method to set Property</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setAddressProp</span><span class="hljs-params">(Properties addressProp)</span> {<br>      <span class="hljs-built_in">this</span>.addressProp = addressProp;<br>   } <br>   <span class="hljs-comment">// prints and returns all the elements of the Property.</span><br>   <span class="hljs-keyword">public</span> Properties <span class="hljs-title function_">getAddressProp</span><span class="hljs-params">()</span> {<br>      System.out.println(<span class="hljs-string">"Property Elements :"</span>  + addressProp);<br>      <span class="hljs-keyword">return</span> addressProp;<br>   }<br>}<br></code></pre></td></tr></table></figure>
+<p>下面是 <strong>MainApp.java</strong> 文件的内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.tutorialspoint;<br><span class="hljs-keyword">import</span> org.springframework.context.ApplicationContext;<br><span class="hljs-keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainApp</span> {<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> {<br>      <span class="hljs-type">ApplicationContext</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> <br>             <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClassPathXmlApplicationContext</span>(<span class="hljs-string">"Beans.xml"</span>);<br>      JavaCollection jc=(JavaCollection)context.getBean(<span class="hljs-string">"javaCollection"</span>);<br>      jc.getAddressList();<br>      jc.getAddressSet();<br>      jc.getAddressMap();<br>      jc.getAddressProp();<br>   }<br>}<br></code></pre></td></tr></table></figure>
+<p>下面是配置所有类型的集合的配置文件 <strong>Beans.xml</strong>
+文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">"1.0"</span> encoding=<span class="hljs-string">"UTF-8"</span>?&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans"</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://www.springframework.org/schema/beans</span></span><br><span class="hljs-string"><span class="hljs-tag">    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"</span>&gt;</span><br><br>   <span class="hljs-comment">&lt;!-- Definition for javaCollection --&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"javaCollection"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.tutorialspoint.JavaCollection"</span>&gt;</span><br><br>      <span class="hljs-comment">&lt;!-- results in a setAddressList(java.util.List) call --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"addressList"</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">list</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>INDIA<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>Pakistan<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>USA<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>USA<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>         <span class="hljs-tag">&lt;/<span class="hljs-name">list</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><br>      <span class="hljs-comment">&lt;!-- results in a setAddressSet(java.util.Set) call --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"addressSet"</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">set</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>INDIA<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>Pakistan<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>USA<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>USA<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">set</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><br>      <span class="hljs-comment">&lt;!-- results in a setAddressMap(java.util.Map) call --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"addressMap"</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">map</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"1"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"INDIA"</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"2"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Pakistan"</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"3"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"USA"</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">entry</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"4"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"USA"</span>/&gt;</span><br>         <span class="hljs-tag">&lt;/<span class="hljs-name">map</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><br>      <span class="hljs-comment">&lt;!-- results in a setAddressProp(java.util.Properties) call --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"addressProp"</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-name">props</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"one"</span>&gt;</span>INDIA<span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"two"</span>&gt;</span>Pakistan<span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"three"</span>&gt;</span>USA<span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">prop</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"four"</span>&gt;</span>USA<span class="hljs-tag">&lt;/<span class="hljs-name">prop</span>&gt;</span><br>         <span class="hljs-tag">&lt;/<span class="hljs-name">props</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>一旦你创建源代码和 bean
+配置文件完成后，我们就可以运行该应用程序。你应该注意这里不需要配置文件。如果你的应用程序一切都正常，将输出以下信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">List Elements :[INDIA, Pakistan, USA, USA]<br>Set Elements :[INDIA, Pakistan, USA]<br>Map Elements :{1=INDIA, 2=Pakistan, 3=USA, 4=USA}<br>Property Elements :{two=Pakistan, one=INDIA, three=USA, four=USA}<br></code></pre></td></tr></table></figure>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2023/05/07/%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5%E8%A1%A8/">← Next 常用命令速查表</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/05/06/JWT/">Django 前后端分离 JWT 登录 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="To Catalog">≡</a><a id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">冯露露</a></h1><div id="description"><p>分享兴趣爱好的技术博客</p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ioc%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-text">0. IOC的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E9%87%8D%E8%A6%81%E7%9A%84%E6%8A%80%E6%9C%AF"><span class="toc-text">0.1 三个重要的技术：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">0.2 工作原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-text">1. 基于构造函数的依赖注入</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E6%9E%84%E9%80%A0%E5%8F%82%E6%95%B0%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">1.1 多个构造参数的配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#type%E6%98%BE%E5%BC%8F%E6%8C%87%E5%AE%9A%E5%B1%9E%E6%80%A7"><span class="toc-text">1.2 type显式指定属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%8F%82%E6%95%B0"><span class="toc-text">1.3 索引参数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E8%AE%BE%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-text">2. 基于设值函数的依赖注入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E5%86%85%E9%83%A8beans"><span class="toc-text">3. 注入内部Beans</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E9%9B%86%E5%90%88"><span class="toc-text">4. 注入集合</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {code.findCode();
+document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>
