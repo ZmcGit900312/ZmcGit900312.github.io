@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="zh-CN" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Evaluation Method | 海花号</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - 共 $1 行","copy":"复制","copyFinish":"复制成功","expand":"展开"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/brands.min.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/fontawesome.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+@font-face {
+ font-family: 'Font Awesome 6 Brands';
+ src: local('Font Awesome 6 Brands'), url('/lib/fontawesome/fa-brands.woff2') format('woff2');
+}
+@font-face {
+ font-family: 'Font Awesome 6 Free';
+ src: local('Font Awesome 6 Free'), url('/lib/fontawesome/fa-regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('/img/bg.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><meta name="generator" content="Hexo 7.0.0-rc1"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem"><a class="navBlock" href="/about"><span class="navItemTitle">About</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>Evaluation Method</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2023-05-16T01:38:55.000Z" id="date"> 2023-05-16</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2023-05-16T04:29:16.806Z" id="updated"> 2023-05-16</time></div></span><br><span>文章总字数: <div class="control">1.4k</div></span><br><span>预计阅读时间: <div class="control">7 分钟</div></span></div></div><hr><div id="post-content"><h1 id="introduction"><a href="#1.-Introduction" class="headerlink" title="1.-Introduction"></a>1. Introduction</h1>
+<p>The Evaluation Methodology is a tool to help one better understand
+the steps needed to do a quality evaluation.</p>
+<p>By following these steps, a faculty member can learn what he or she
+needs to know to determine the level of quality of a performance,
+product or skill.</p>
+<span id="more"></span>
+<h1 id="methodology"><a href="#2.-Methodology" class="headerlink" title="2.-Methodology"></a>2. Methodology</h1>
+<p>The Evaluation Methodology consists of <strong>four</strong> main
+steps along with a set of sub-steps.</p>
+<h2 id="define-the-parameters-of-the-evaluation定义评估参数">2.1 Define
+the parameters of the evaluation(定义评估参数)</h2>
+<p><strong>The client:</strong></p>
+<ol type="1">
+<li>明确评估需求</li>
+<li>明确评估结果的作用</li>
+<li>明确应该向评估对象报告的内容以及由谁做报告</li>
+<li>明确评估者需要听取的汇报内容</li>
+<li>选择要遵循的指导方针来实施评估</li>
+</ol>
+<blockquote>
+<ol type="1">
+<li>determines the <strong>need</strong> for the evaluation.</li>
+<li>determines the <strong>use</strong> for the results of the
+evaluation.</li>
+<li>determines what should be <strong>reported</strong> to the evaluatee
+and by whom.</li>
+<li>determines what the evaluator needs to report to the client</li>
+<li>chooses guidelines to follow to implement the evaluation</li>
+</ol>
+</blockquote>
+<h2 id="design-the-methods-used-for-the-evaluation">2.2 Design the
+methods used for the evaluation</h2>
+<p><em>This step is skipped if an already existing evaluation tool is
+used.</em></p>
+<p>The evaluator alone( or the evaluator with the client):</p>
+<ol type="1">
+<li>根据2.1.5中的指南选择用于评估的标准</li>
+<li>确定需要收集的证据或数据，用以支撑遴选每个标准</li>
+<li>确定可使用的范例</li>
+<li>确定收集数据或证据的方法</li>
+<li>制定收集数据的方案</li>
+</ol>
+<blockquote>
+<ol type="1">
+<li>chooses criteria to use for the evaluation based on the guidelines
+in Step 2.1.5</li>
+<li>determines the evidence that will be collected for each chosen
+criterion.</li>
+<li>determines the sample that will be used, if appropriate.</li>
+<li>determines ways to collect the evidence</li>
+<li>sets up a plan to collect the evidence.</li>
+</ol>
+</blockquote>
+<h2 id="set-standards-and-collect-evidence">2.3 Set standards and
+collect evidence</h2>
+<ol type="1">
+<li>评估者告知客户用于评估质量的尺度</li>
+<li>客户基于评估的性能指标制定决策过程</li>
+<li>客户制定用于决策的标准</li>
+</ol>
+<p>After the client has set the standards, the evaluator:</p>
+<ol start="4" type="1">
+<li>收集数据</li>
+<li>将结果整理成文档</li>
+</ol>
+<blockquote>
+<ol type="1">
+<li>The evaluator informs the client of the scales that will be used to
+determine quality.</li>
+<li>The client develops the decision-making process to use based on the
+evaluated performance quality.</li>
+<li>The client sets the standards that will be used in
+decision-making.</li>
+</ol>
+<p>After the client has set the standards, the evaluator:</p>
+<ol start="4" type="1">
+<li>collects the evidence.</li>
+<li>documents the findings.</li>
+</ol>
+</blockquote>
+<h2 id="report-and-make-decisions"><a href="#2.4-Report and make decisions" class="headerlink" title="2.4-Report and make decisions"></a>2.4 Report and make decisions</h2>
+<ol type="1">
+<li>评估者向客户汇报2.1.4中确定的汇报内容</li>
+<li>客户对照2.3.3中的标准检查汇报内容质量</li>
+<li>客户基于结果制定和实施决策</li>
+<li>客户和/或评估者将结果适当地文档化</li>
+<li>如果合适，要么评估者要么客户将评估结果汇报给被评估者</li>
+</ol>
+<blockquote>
+<ol type="1">
+<li>The evaluator reports the information in 2.1.4 to the client.</li>
+<li>The client checks the quality against the standards set in
+2.3.3.</li>
+<li>The client makes and implements decisions based on the
+findings.</li>
+<li>The client and/or evaluator documents the results
+appropriately.</li>
+<li>Either the evaluator or client reports the findings to the
+evaluatee, if appropriate.</li>
+</ol>
+</blockquote>
+<h1 id="discussion"><a href="#3.-Discussion" class="headerlink" title="3.-Discussion"></a>3. Discussion</h1>
+<h2 id="define-the-parameters-of-the-evaluation">3.1 Define the
+parameters of the evaluation</h2>
+<ol type="1">
+<li>The first step in setting up an evaluation is to determine the need
+for the evaluation. If there is no need to collect evidence and no
+decisions will be made based on the evidence, there is a little point in
+an evaluation. Having the purpose in place gives a framework to design
+process.</li>
+<li>Before designing an evaluation process, the client must decide how
+the results will be used and what decisions need to be made. Knowing
+these requirements in advance facilitates finding reliable criteria and
+determining the evidence needed.</li>
+<li>Using the rationale for the evaluation, the client can determine
+what results, if any, need to be reported to the evaluatee. Often during
+indirect evaluations, in which the level of one group’s performance is
+used to evaluate or assess another groups’ performance, no feedback is
+given to the evaluatee. On the other hand, when decisions are being made
+that affect the evaluatee directly, a plan should be in place before the
+outcome is known for reporting the information to the evaluatee.</li>
+<li>The client will make decisions based on the evaluation, so the
+client must know what evidence he or she needs to make a decision. This
+evidence might be an average, an individual score, or an annotated
+report. This information must be provided to the client by the
+evaluator.</li>
+<li>Before planning the methods of evaluation, it is important to sketch
+out the time for completion, checks for reliability, and lists of needed
+and not acceptable quality criteria. Developing these guidelines ahead
+of time ensures that the evaluation will align with the client’s
+needs.</li>
+</ol>
+<h2 id="design-the-methods-used-for-the-evaluation.">3.2 Design the
+methods used for the evaluation.</h2>
+<ol type="1">
+<li>The parameters set in 2.1 should be used to help determine the
+criteria used in the evaluation process.</li>
+<li>Once the criteria are set, the evaluator determines what evidence
+should be collected. The time for collection, the cost, and the
+usefulness of the evidence must be considered in deciding what evidence
+to collect.</li>
+<li>Particularly in indirect evaluation, a sample of performance is
+often used to determine quality. This sample must be unbiased and large
+enough for the results to be useful.</li>
+<li>Determining how to collect the data includes deciding what form of
+evidence will be used and how it will be collected.</li>
+<li>The evidence collection plan includes how, when, and where the
+information will be collected.</li>
+</ol>
+<h2 id="set-standards-and-collect-evidence-from-a-performance-or-outcome">3.3
+Set standards and collect evidence from a performance or outcome</h2>
+<ol type="1">
+<li>Once it is determined what evidence will be collected, a scale must
+be set to describe how the quality is judged. This scale could be a
+number scale, a rubric, or a description.</li>
+<li>For the process to be unbiased, the client must decide before
+receiving the information from the evaluation what consequences will
+occur based on the outcome of the evaluation. This would be a simple
+process, such as for high quality, there will be positive consequences;
+for low quality, there will be negative consequences; and between the
+two, other evaluative methods will be used to determine the
+consequences.</li>
+<li>Once the scale and the decisions to be made are known, the client
+can set standards for decisions. These standards define “quality” based
+on what will be reported by the evaluator.</li>
+<li>Following the plan in 3.2, the evaluator collects the needed
+information and analyzes it.</li>
+<li>The evaluator documents what has been found in the form of
+individual scores, level of performance, averages, or narratives.
+Results should be documented in a way that helps the evaluator write the
+requested report to the client, using the scales that informed the
+setting of standards.</li>
+</ol>
+<h2 id="report-and-make-decisions-1"><a href="#3.4-Report and make decisions" class="headerlink" title="3.4-Report and make decisions"></a>3.4 Report and make decisions</h2>
+<ol type="1">
+<li>For criteria-based standards, after the client has set the
+standards, the evaluator can give the report to the client, and the
+standards will not be biased by the evaluative outcome. For norm-based
+standards, the evaluator must include in the report summaries of
+outcomes of all evaluations.</li>
+<li>Once the client has set the standards and has received the
+evaluator’s report, the client can check the evaluative outcomes against
+the standards that have been set.</li>
+<li>Based on 3.4.1 and evaluative outcomes, the client makes the
+decision and develops plans to implement it.</li>
+<li>Anything that needs to be documented for future use should be done
+at this point.</li>
+<li>The contents of a report to the evaluatee, if appropriate, should be
+guided by the results of 4.1.5</li>
+</ol>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages" style="justify-content: flex-end"><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/05/13/BNF/">巴科斯-诺尔范式（Backus Normal Form） Prev →</a></div></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="文章目录">≡</a><a id="color-mode" onClick="colorMode.change()" title="切换主题"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="/img/faction/4.png" alt="Logo"></a><h1 id="Dr"><a href="/">冯露露</a></h1><div id="description"><p>分享兴趣爱好的技术博客</p></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#introduction"><span class="toc-text">1. Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#methodology"><span class="toc-text">2. Methodology</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#define-the-parameters-of-the-evaluation%E5%AE%9A%E4%B9%89%E8%AF%84%E4%BC%B0%E5%8F%82%E6%95%B0"><span class="toc-text">2.1 Define
+the parameters of the evaluation(定义评估参数)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#design-the-methods-used-for-the-evaluation"><span class="toc-text">2.2 Design the
+methods used for the evaluation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set-standards-and-collect-evidence"><span class="toc-text">2.3 Set standards and
+collect evidence</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#report-and-make-decisions"><span class="toc-text">2.4 Report and make decisions</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#discussion"><span class="toc-text">3. Discussion</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#define-the-parameters-of-the-evaluation"><span class="toc-text">3.1 Define the
+parameters of the evaluation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#design-the-methods-used-for-the-evaluation."><span class="toc-text">3.2 Design the
+methods used for the evaluation.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set-standards-and-collect-evidence-from-a-performance-or-outcome"><span class="toc-text">3.3
+Set standards and collect evidence from a performance or outcome</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#report-and-make-decisions-1"><span class="toc-text">3.4 Report and make decisions</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {code.findCode();
+document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

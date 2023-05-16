@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="zh-CN" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>巴科斯-诺尔范式（Backus Normal Form） | 海花号</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - 共 $1 行","copy":"复制","copyFinish":"复制成功","expand":"展开"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/brands.min.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/fontawesome.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+@font-face {
+ font-family: 'Font Awesome 6 Brands';
+ src: local('Font Awesome 6 Brands'), url('/lib/fontawesome/fa-brands.woff2') format('woff2');
+}
+@font-face {
+ font-family: 'Font Awesome 6 Free';
+ src: local('Font Awesome 6 Free'), url('/lib/fontawesome/fa-regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('/img/bg.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><meta name="generator" content="Hexo 7.0.0-rc1"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem"><a class="navBlock" href="/about"><span class="navItemTitle">About</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>巴科斯-诺尔范式（Backus Normal Form）</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2023-05-13T07:27:53.000Z" id="date"> 2023-05-13</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2023-05-13T08:04:22.789Z" id="updated"> 2023-05-13</time></div></span><br><span>文章总字数: <div class="control">667</div></span><br><span>预计阅读时间: <div class="control">2 分钟</div></span></div></div><hr><div id="post-content"><h1 id="简介"><a href="#1.-简介" class="headerlink" title="1.-简介"></a>1. 简介</h1>
+<p><strong>巴科斯范式</strong>
+以美国人巴科斯(Backus)和丹麦人诺尔(Naur)的名字命名的一种形式化的语法表示方法，用来描述语法的一种形式体系，是一种典型的元语言。又称巴科斯-诺尔形式(Backus-Naur
+form)。</p>
+<p>它不仅能严格地表示语法规则，而且所描述的语法是与上下文无关的。它以递归方式描述语言中的各种成分，凡遵守其规则的程序就可保证语法上的正确性。它具有语法简单，表示明确，便于语法分析和编译的特点。</p>
+<span id="more"></span>
+<h1 id="基本结构"><a href="#2.-基本结构" class="headerlink" title="2.-基本结构"></a>2. 基本结构</h1>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">&lt;non-terminal&gt; ::= &lt;replacement&gt;<br></code></pre></td></tr></table></figure>
+<p>其中，<code>non-terminal</code>表示非终止符，代表尚未定义完全的概念，可以继续由右边的<code>replacement</code>进一步解释和定义。</p>
+<p>比如Python文档中对字符串字面量的BNF定义：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs css">stringliteral   ::=  [stringprefix](shortstring | longstring)       <br>stringprefix    ::=  <span class="hljs-string">"r"</span> | <span class="hljs-string">"u"</span> | <span class="hljs-string">"R"</span> | <span class="hljs-string">"U"</span> | <span class="hljs-string">"f"</span> | <span class="hljs-string">"F"</span><br>                     | <span class="hljs-string">"fr"</span> | <span class="hljs-string">"Fr"</span> | <span class="hljs-string">"fR"</span> | <span class="hljs-string">"FR"</span> | <span class="hljs-string">"rf"</span> | <span class="hljs-string">"rF"</span> | <span class="hljs-string">"Rf"</span> | <span class="hljs-string">"RF"</span><br>shortstring     ::=  <span class="hljs-string">"'"</span> shortstringitem* <span class="hljs-string">"'"</span> | <span class="hljs-string">'"'</span> shortstringitem* <span class="hljs-string">'"'</span><br>longstring      ::=  <span class="hljs-string">"'''"</span> longstringitem* <span class="hljs-string">"'''"</span> | <span class="hljs-string">'"""'</span> longstringitem* <span class="hljs-string">'"""'</span><br>shortstringitem ::=  shortstringchar | stringescapeseq<br>longstringitem  ::=  longstringchar | stringescapeseq<br>shortstringchar ::=  &lt;any source character except <span class="hljs-string">"\" or newline or the quote&gt;</span><br><span class="hljs-string">longstringchar  ::=  &lt;any source character except "</span>\<span class="hljs-string">"&gt;</span><br><span class="hljs-string">stringescapeseq ::=  "</span>\<span class="hljs-string">" &lt;any source character&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这段代码第一行说明一个合法的字符串自变量<code>stringliteral</code>，可以由一个可选的字符串前缀<code>stringprefix</code>加上一个短字符<code>shortstring</code>或者长字符<code>longstring</code>组成。</p>
+<p>代码第二行说明字符串前缀<code>stringprefix</code>可以包括"r"、"u"、"R"、"U"、"f"、"F"、"fr"、"Fr"、"fR"、"FR"、"rf"、"rF"、"Rf"、"RF"中的任何一个，用于指示是否启用原始字符串（raw
+string）、unicode字符串、格式化字符串（formatted string）。</p>
+<p>代码第三和第四行表明，短字符串可以由单引号或者双引号包围，而长字符串可以由三引号包围，至于里面的字符串短长语可以由除转义符<code>\</code>外的任意符号表示。</p>
+<h1 id="常用的bnf语法"><a href="#3.-常用的BNF语法" class="headerlink" title="3.-常用的BNF语法"></a>3. 常用的BNF语法</h1>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs C">::=     <span class="hljs-comment">// 代表“定义为”</span><br>&lt;A&gt;     <span class="hljs-comment">// A为必选项</span><br>“A”     <span class="hljs-comment">// A是一个术语，不用翻译</span><br><span class="hljs-string">'A'</span>     <span class="hljs-comment">// A是一个术语，不用翻译</span><br>[A]     <span class="hljs-comment">// A是可选项</span><br>[...]   <span class="hljs-comment">// 选项只出现一次</span><br>{A}     <span class="hljs-comment">// A是重复项，可出现任意次数，包括0次</span><br>A*      <span class="hljs-comment">// A是重复项，可出现任意次数，包括0次</span><br>A+      <span class="hljs-comment">// A可出现1次或多次</span><br>(A B)   <span class="hljs-comment">// A和B被组合在一起</span><br>A|B     <span class="hljs-comment">// A、B是并列选项，只能选一个</span><br></code></pre></td></tr></table></figure>
+<p>使用以上的语法可以很方面且无歧义的描述各种语言规则，如C语言中的函数声明如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">&lt;函数声明语句&gt; ::= &lt;类型&gt;&lt;标识符&gt;(&lt;形参表&gt;); <br>&lt;形参表&gt; ::= &lt;类型&gt;&lt;标识符&gt; | &lt;形参表&gt;,&lt;形参表&gt; <br></code></pre></td></tr></table></figure>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2023/05/16/evaluation/">← Next Evaluation Method</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/05/11/nputhesis%E6%A8%A1%E6%9D%BF%E8%AF%B4%E6%98%8E/">nputhesis模板说明 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="文章目录">≡</a><a id="color-mode" onClick="colorMode.change()" title="切换主题"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="/img/faction/4.png" alt="Logo"></a><h1 id="Dr"><a href="/">冯露露</a></h1><div id="description"><p>分享兴趣爱好的技术博客</p></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">1. 简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-text">2. 基本结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84bnf%E8%AF%AD%E6%B3%95"><span class="toc-text">3. 常用的BNF语法</span></a></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {code.findCode();
+document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>
