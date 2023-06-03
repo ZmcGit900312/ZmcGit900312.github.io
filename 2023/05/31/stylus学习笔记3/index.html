@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="zh-CN" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>stylus学习笔记（3） | 海花号</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy","copyFinish":"copied","expand":"expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/brands.min.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/fontawesome.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light') document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark') document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+@font-face {
+ font-family: 'Font Awesome 6 Brands';
+ src: local('Font Awesome 6 Brands'), url('/lib/fontawesome/fa-brands.woff2') format('woff2');
+}
+@font-face {
+ font-family: 'Font Awesome 6 Free';
+ src: local('Font Awesome 6 Free'), url('/lib/fontawesome/fa-regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('/img/bg.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><meta name="generator" content="Hexo 7.0.0-rc1"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head><body><div class="loading" style="opacity: 0"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn hide"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem"><a class="navBlock" href="/about"><span class="navItemTitle">About</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>stylus学习笔记（3）</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2023-05-31T14:32:50.000Z" id="date"> 2023-05-31</time></div></span><br><span>Last Update: <div class="control"><time datetime="2023-06-03T06:21:23.669Z" id="updated"> 2023-06-03</time></div></span><br><span>Word Count: <div class="control">2.4k</div></span><br><span>Read Time: <div class="control">12 min</div></span></div></div><hr><div id="post-content"><h1 id="剩余参数-rest-params"><a href="#11.-剩余参数 Rest Params" class="headerlink" title="11.-剩余参数 Rest Params"></a>11. 剩余参数 Rest Params</h1>
+<h2 id="调用规则"><a href="#11.1-调用规则" class="headerlink" title="11.1-调用规则"></a>11.1 调用规则</h2>
+<p>Stylus支持<code>name..</code>形式的参数
+。这些参数将逐个剥离参数表，并将其传递给 Mixin
+或函数。这一特性在使用隐函数时，支持诸如-webkit 或-moz
+之类前缀时非常有用。</p>
+<p>在下面的示例中，我们使用所有传递的参数，并将它们简单地应用于多个属性。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">box-shadow</span><span class="hljs-params">(args...)</span></span><br>  -webkit-<span class="hljs-attribute">box-shadow</span> args<br>  -moz-<span class="hljs-attribute">box-shadow</span> args<br>  <span class="hljs-attribute">box-shadow</span> args<br><br><span class="hljs-selector-id">#login</span><br>  <span class="hljs-attribute">box-shadow</span> <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-number">5px</span> <span class="hljs-number">#eee</span><br></code></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>编译后</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-id">#login</span> {<br>  -webkit-<span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-number">5px</span> <span class="hljs-number">#eee</span>;<br>  -moz-<span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-number">5px</span> <span class="hljs-number">#eee</span>;<br>  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-number">5px</span> <span class="hljs-number">#eee</span>;<br>}<br></code></pre></td></tr></table></figure>
+<p>当我们想要挑选出特定值，比如<code>x-offset</code>，可以使用<code>args[0]</code>，或者重新定义混合</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">box-shadow</span><span class="hljs-params">(offset-x, args...)</span></span><br>  got-offset-x offset-x<br>  -webkit-<span class="hljs-attribute">box-shadow</span> offset-x args<br>  -moz-<span class="hljs-attribute">box-shadow</span> offset-x args<br>  <span class="hljs-attribute">box-shadow</span> offset-x args<br><br><span class="hljs-selector-id">#login</span><br>  <span class="hljs-attribute">box-shadow</span> <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-number">5px</span> <span class="hljs-number">#eee</span><br><br></code></pre></td></tr></table></figure>
+<p>编译后：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-id">#login</span> {<br>  got-offset-x: <span class="hljs-number">1px</span>;<br>  -webkit-<span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-number">5px</span> <span class="hljs-number">#eee</span>;<br>  -moz-<span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-number">5px</span> <span class="hljs-number">#eee</span>;<br>  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-number">5px</span> <span class="hljs-number">#eee</span>;<br>}<br></code></pre></td></tr></table></figure>
+<h2 id="参量-arguments"><a href="#11.2-参量 arguments" class="headerlink" title="11.2-参量 arguments"></a>11.2 参量 arguments</h2>
+<p><code>arguments</code>可以将所有的内容注入混合以及函数中，这在某些特定场景下，如精确表达式或者传递逗号时非常有用。</p>
+<p>比如，如果我们使用剩余参数，逗号会被忽略</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">box-shadow</span><span class="hljs-params">(args...)</span></span><br>  -webkit-<span class="hljs-attribute">box-shadow</span> args<br>  -moz-<span class="hljs-attribute">box-shadow</span> args<br>  <span class="hljs-attribute">box-shadow</span> args<br><br><span class="hljs-selector-id">#login</span><br>  <span class="hljs-attribute">box-shadow</span> <span class="hljs-number">#ddd</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span>, <span class="hljs-number">#eee</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span> <br></code></pre></td></tr></table></figure>
+<p>得到无法令人满意的结果</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-id">#login</span> {<br>  -webkit-<span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">#ddd</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-number">#eee</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span>;<br>  -moz-<span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">#ddd</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-number">#eee</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span>;<br>  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">#ddd</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-number">#eee</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span>;<br>}<br></code></pre></td></tr></table></figure>
+<p>此时可以使用<code>arguments</code></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">box-shadow</span><span class="hljs-params">()</span></span><br>  -webkit-<span class="hljs-attribute">box-shadow</span> arguments<br>  -moz-<span class="hljs-attribute">box-shadow</span> arguments<br>  <span class="hljs-attribute">box-shadow</span> arguments<br><br><span class="hljs-selector-tag">body</span><br>  <span class="hljs-attribute">box-shadow</span> <span class="hljs-number">#ddd</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span>, <span class="hljs-number">#eee</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span><br></code></pre></td></tr></table></figure>
+<p>就能得到期望的结果</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span> {<br>  -webkit-<span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">#ddd</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span>, <span class="hljs-number">#eee</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span>;<br>  -moz-<span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">#ddd</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span>, <span class="hljs-number">#eee</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span>;<br>  <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">#ddd</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span>, <span class="hljs-number">#eee</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span>;<br>}<br></code></pre></td></tr></table></figure>
+<h1 id="注释-comments"><a href="#12.-注释 Comments" class="headerlink" title="12.-注释 Comments"></a>12. 注释 Comments</h1>
+<h2 id="单行注释-single-line"><a href="#12.1-单行注释 Single-line" class="headerlink" title="12.1-单行注释 Single-line"></a>12.1 单行注释 Single-line</h2>
+<p>单行注释与JS类似，且不会输出到CSS中。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-comment">// I'm a comment!</span><br><span class="hljs-selector-tag">body</span><br>  <span class="hljs-attribute">padding</span> <span class="hljs-number">5px</span> // some awesome padding<br></code></pre></td></tr></table></figure>
+<h2 id="多行注释-multi-line"><a href="#12.2-多行注释 Multi-line" class="headerlink" title="12.2-多行注释 Multi-line"></a>12.2 多行注释 Multi-line</h2>
+<p>多行注释与CSS注释一致，但是只有<code>compress</code>选项关闭时才会输出</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * Adds the given numbers together.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-title">add</span><span class="hljs-params">(a, b)</span></span><br>  <span class="hljs-selector-tag">a</span> + b<br></code></pre></td></tr></table></figure>
+<h2 id="多行注释缓存-multi-line-buffered">12.3 多行注释缓存 Multi-line
+buffered</h2>
+<p>以<code>/*!</code>开头的多行注释不会被忽略，不论此时<code>compress</code>的启用状态。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-comment">/*!</span><br><span class="hljs-comment"> * Adds the given numbers together.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-title">add</span><span class="hljs-params">(a, b)</span></span><br>  <span class="hljs-selector-tag">a</span> + b<br></code></pre></td></tr></table></figure>
+<h1 id="条件表达式-conditionals"><a href="#13.-条件表达式 Conditionals" class="headerlink" title="13.-条件表达式 Conditionals"></a>13. 条件表达式 Conditionals</h1>
+<p>条件判断为编程语言提供一定的流程控制，下面的例子非常简单，并不推荐照搬使用。</p>
+<h2 id="if-else-if-else"><a href="#13.1-if / else if / else" class="headerlink" title="13.1-if / else if / else"></a>13.1 if / else if / else</h2>
+<p>下面的例子会重载<code>padding</code>属性，并且将它付给<code>margin</code></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs stylus">overload-<span class="hljs-attribute">padding</span> = true<br><br><span class="hljs-keyword">if</span> overload-<span class="hljs-attribute">padding</span><br>  <span class="hljs-attribute">padding</span>(y, x)<br>    <span class="hljs-attribute">margin</span> y x<br><br><span class="hljs-selector-tag">body</span><br>  <span class="hljs-attribute">padding</span> <span class="hljs-number">5px</span> <span class="hljs-number">10px</span><br></code></pre></td></tr></table></figure>
+<p>另一个例子</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">box</span><span class="hljs-params">(x, y, margin = false)</span></span><br>  <span class="hljs-attribute">padding</span> y x<br>  <span class="hljs-keyword">if</span> <span class="hljs-attribute">margin</span><br>    <span class="hljs-attribute">margin</span> y x<br><br><span class="hljs-selector-tag">body</span><br>  <span class="hljs-built_in">box</span>(<span class="hljs-number">5px</span>, <span class="hljs-number">10px</span>, true)<br></code></pre></td></tr></table></figure>
+<p><code>box()</code>函数的例子</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">box</span><span class="hljs-params">(x, y, margin-only = false)</span></span><br>  <span class="hljs-keyword">if</span> <span class="hljs-attribute">margin</span>-only<br>    <span class="hljs-attribute">margin</span> y x<br>  <span class="hljs-keyword">else</span><br>    <span class="hljs-attribute">padding</span> y x<br></code></pre></td></tr></table></figure>
+<h2 id="unless"><a href="#13.2-unless" class="headerlink" title="13.2-unless"></a>13.2 unless</h2>
+<p>类似与三目运算符</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs stylus">disable-<span class="hljs-attribute">padding</span>-override = true<br><br>unless disable-<span class="hljs-attribute">padding</span>-override is defined and disable-padding-override<br>  <span class="hljs-attribute">padding</span>(x, y)<br>    <span class="hljs-attribute">margin</span> y x<br><br><span class="hljs-selector-tag">body</span><br>  <span class="hljs-attribute">padding</span> <span class="hljs-number">5px</span> <span class="hljs-number">10px</span><br></code></pre></td></tr></table></figure>
+<h2 id="postfix-conditionals"><a href="#13.3-Postfix Conditionals" class="headerlink" title="13.3-Postfix Conditionals"></a>13.3 Postfix Conditionals</h2>
+<p>Stylus supports postfix conditionals. This means that <code>if</code>
+and <code>unless</code> act as operators; they evaluate the left-hand
+operand when the right-hand expression is truthy.</p>
+<p>For example let's define <code>negative()</code> to perform some
+basic type checking. Below we use block-style conditionals:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">negative</span><span class="hljs-params">(n)</span></span><br>  unless n is <span class="hljs-selector-tag">a</span> <span class="hljs-string">'unit'</span><br>    <span class="hljs-built_in">error</span>(<span class="hljs-string">'invalid number'</span>)<br>  <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">0</span><br>    yes<br>  <span class="hljs-keyword">else</span><br>    no<br></code></pre></td></tr></table></figure>
+<p>Next, we utilize postfix conditionals to keep our function terse.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">negative</span><span class="hljs-params">(n)</span></span><br>  <span class="hljs-built_in">error</span>(<span class="hljs-string">'invalid number'</span>) unless n is <span class="hljs-selector-tag">a</span> <span class="hljs-string">'unit'</span><br>  return yes <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">0</span><br>  no<br></code></pre></td></tr></table></figure>
+<p>Of course, we could take this further. For example, we could write
+<code>n &lt; 0 ? yes : no</code>, or simply stick with booleans:
+<code>n &lt; 0</code>.</p>
+<p>Postfix conditionals may be applied to most single-line statements.
+For example, <code>@import</code>, <code>@charset</code>, mixins—and of
+course, properties as shown below:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">pad</span><span class="hljs-params">(types = margin padding, n = <span class="hljs-number">5px</span>)</span></span><br>  <span class="hljs-attribute">padding</span> <span class="hljs-built_in">unit</span>(n, px) if padding in types<br>  <span class="hljs-attribute">margin</span> <span class="hljs-built_in">unit</span>(n, px) if margin in types<br><br><span class="hljs-selector-tag">body</span><br>  <span class="hljs-built_in">pad</span>()<br><br><span class="hljs-selector-tag">body</span><br>  <span class="hljs-built_in">pad</span>(<span class="hljs-attribute">margin</span>)<br><br><span class="hljs-selector-tag">body</span><br>  apply-mixins = true<br>  <span class="hljs-built_in">pad</span>(<span class="hljs-attribute">padding</span>, <span class="hljs-number">10</span>) if apply-mixins<br></code></pre></td></tr></table></figure>
+<p>编译后</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span> {<br>  <span class="hljs-attribute">padding</span>: <span class="hljs-number">5px</span>;<br>  <span class="hljs-attribute">margin</span>: <span class="hljs-number">5px</span>;<br>}<br><span class="hljs-selector-tag">body</span> {<br>  <span class="hljs-attribute">margin</span>: <span class="hljs-number">5px</span>;<br>}<br><span class="hljs-selector-tag">body</span> {<br>  <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;<br>}<br></code></pre></td></tr></table></figure>
+<h1 id="哈希-hashes"><a href="#14.-哈希 Hashes" class="headerlink" title="14.-哈希 Hashes"></a>14. 哈希 Hashes</h1>
+<p>Stylus 在 <code>0.39.0</code> 版本中增加了对哈希对象的支持。</p>
+<h2 id="定义"><a href="#14.1-定义" class="headerlink" title="14.1-定义"></a>14.1 定义</h2>
+<p>可以使用大括号来定义哈希对象并用冒号来区分键和值：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus">foo = {<br>    bar: baz,<br>    baz: raz<br>}<br></code></pre></td></tr></table></figure>
+<p>键应该是恰当的标识或字符串：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">foo = {<br>  bar: baz,<br>  <span class="hljs-string">'baz'</span>: raz,<br>  <span class="hljs-string">'0'</span>: raz<br>}<br></code></pre></td></tr></table></figure>
+<p>当你已经有一个哈希对象时，你可以使用方括号和字符串来为其赋值：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus">foo = {}<br>foo<span class="hljs-selector-attr">[<span class="hljs-string">'bar'</span>]</span> = baz<br>foo<span class="hljs-selector-attr">[<span class="hljs-string">'baz'</span>]</span> = raz<br></code></pre></td></tr></table></figure>
+<p>请注意，虽然不能在花括号定义中使用变量或插值，但可以在方括号内使用变量：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus">foo = {}<br>bar = <span class="hljs-string">'baz'</span><br>foo<span class="hljs-selector-attr">[bar]</span> = raz<br><br>foo<span class="hljs-selector-class">.baz</span><br><span class="hljs-comment">// =&gt; raz</span><br></code></pre></td></tr></table></figure>
+<h2 id="匿名哈希-anonymous-hash"><a href="#14.2-匿名哈希 Anonymous hash" class="headerlink" title="14.2-匿名哈希 Anonymous hash"></a>14.2 匿名哈希 Anonymous hash</h2>
+<p>我们可以使用匿名哈希对象构建列表，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs stylus">list = foo {int: <span class="hljs-number">1</span>, str: <span class="hljs-string">'1'</span>} {node: a-node, <span class="hljs-attribute">color</span>: <span class="hljs-number">#32E</span>}<br><br>list<span class="hljs-selector-attr">[0]</span><br><span class="hljs-comment">// =&gt; foo</span><br><br><span class="hljs-function"><span class="hljs-title">type</span><span class="hljs-params">(list[<span class="hljs-number">0</span>])</span></span><br><span class="hljs-comment">// =&gt; 'ident'</span><br><br><span class="hljs-function"><span class="hljs-title">type</span><span class="hljs-params">(list[<span class="hljs-number">1</span>])</span></span><br><span class="hljs-comment">// =&gt; 'object'</span><br><br>list<span class="hljs-selector-attr">[1]</span><span class="hljs-selector-class">.int</span><br><span class="hljs-comment">// =&gt; 1</span><br><br>list<span class="hljs-selector-attr">[2]</span><span class="hljs-selector-class">.color</span><br><span class="hljs-comment">// =&gt; #32E</span><br></code></pre></td></tr></table></figure>
+<p>为了访问这些值，可以使用<code>[str]</code>以及<code>.</code>这样的语法来进行索引。</p>
+<h2 id="访问器-getters"><a href="#14.3-访问器 Getters" class="headerlink" title="14.3-访问器 Getters"></a>14.3 访问器 Getters</h2>
+<p>可以使用<code>.</code>或者<code>()</code>从哈希表中获取哈希值</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs stylus">foo = { bar: <span class="hljs-string">"baz"</span> }<br><br>foo<span class="hljs-selector-class">.bar</span>			<span class="hljs-comment">// =&gt; "baz"</span><br><br>foo = { <span class="hljs-string">"%"</span>: <span class="hljs-number">10</span> }<br>baz = <span class="hljs-string">"%"</span><br><br>foo<span class="hljs-selector-attr">[baz]</span>		<span class="hljs-comment">// =&gt; 10</span><br></code></pre></td></tr></table></figure>
+<p>也可以使用组合形式</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs stylus">foo = {<br>  bar: {<br>    baz: {<br>      raz: <span class="hljs-number">10px</span><br>    }<br>  }<br>}<br><br>qux = <span class="hljs-string">"raz"</span><br>foo<span class="hljs-selector-attr">[<span class="hljs-string">"bar"</span>]</span><span class="hljs-selector-class">.baz</span><span class="hljs-selector-attr">[qux]</span><br><span class="hljs-comment">// =&gt; 10px</span><br></code></pre></td></tr></table></figure>
+<h2 id="插值-interpolation"><a href="#14.4-插值 Interpolation" class="headerlink" title="14.4-插值 Interpolation"></a>14.4 插值 Interpolation</h2>
+<p>在插值中使用哈希对象的话将以 CSS
+的形式输出哈希对象的内容（虽然算不上是 Stylus 的任何功能）：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs stylus">foo = {<br>  <span class="hljs-attribute">width</span>: <span class="hljs-number">10px</span>,<br>  <span class="hljs-attribute">height</span>: <span class="hljs-number">20px</span>,<br>  <span class="hljs-string">'&amp;:hover'</span>: {<br>    <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span><br><br>  }<br>}<br><br><span class="hljs-selector-class">.bar</span><br>  {foo}<br><br><span class="hljs-comment">// =&gt; .bar {</span><br><span class="hljs-comment">//      width: 10px;</span><br><span class="hljs-comment">//      height: 20px;</span><br><span class="hljs-comment">//    }</span><br><span class="hljs-comment">//    .bar:hover {</span><br><span class="hljs-comment">//      padding: 0;</span><br><span class="hljs-comment">//    }</span><br></code></pre></td></tr></table></figure>
+<h2 id="其他操作-other-stuff"><a href="#14.5-其他操作 Other stuff" class="headerlink" title="14.5-其他操作 Other stuff"></a>14.5 其他操作 Other stuff</h2>
+<p>您可以将 Stylus 中的其他普通操作应用到哈希对象上，例如
+<code>length()</code>：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus">foo = { bar: <span class="hljs-string">'a'</span>, baz: <span class="hljs-string">'b'</span> }<br><br><span class="hljs-function"><span class="hljs-title">length</span><span class="hljs-params">(foo)</span></span><br><span class="hljs-comment">// =&gt; 2</span><br></code></pre></td></tr></table></figure>
+<p>你可以遍历哈希对象，key 参数是可选的：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus">foo = { <span class="hljs-attribute">width</span>: <span class="hljs-number">10px</span>, height: <span class="hljs-number">20px</span> }<br><br><span class="hljs-keyword">for</span> key, value <span class="hljs-keyword">in</span> foo<br>  {key}: value<br><br><span class="hljs-comment">// =&gt; width: 10px;</span><br><span class="hljs-comment">//    height: 20px;</span><br></code></pre></td></tr></table></figure>
+<p>可以使用 <code>in</code> 来检查哈希对象中是否存在某个键：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus">foo = { bar: <span class="hljs-number">10px</span>}<br><br>bar <span class="hljs-keyword">in</span> foo<br><span class="hljs-comment">// =&gt; true</span><br><br>baz <span class="hljs-keyword">in</span> foo<br><span class="hljs-comment">// =&gt; false</span><br></code></pre></td></tr></table></figure>
+<p>可以使用相应的内置函数来获取哈希对象的所有键或所有值：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus">foo = { bar: <span class="hljs-string">'a'</span>, baz: <span class="hljs-string">'b'</span> }<br><br><span class="hljs-function"><span class="hljs-title">keys</span><span class="hljs-params">(foo)</span></span><br><span class="hljs-comment">// =&gt; 'bar' 'baz'</span><br><br><span class="hljs-function"><span class="hljs-title">values</span><span class="hljs-params">(foo)</span></span><br><span class="hljs-comment">// =&gt; 'a' 'b'</span><br></code></pre></td></tr></table></figure>
+<p>你可以使用内置函数 <code>remove</code> 从哈希对象中删除一个键：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus">obj = { foo: <span class="hljs-number">1</span>, bar: <span class="hljs-number">2</span> }<br><span class="hljs-function"><span class="hljs-title">remove</span><span class="hljs-params">(obj, <span class="hljs-string">'foo'</span>)</span></span><br><span class="hljs-comment">// =&gt; {"bar":"(2)"}</span><br></code></pre></td></tr></table></figure>
+<p>你还可以使用 <code>merge</code> （别名为
+<code>extend</code>）函数来合并哈希对象：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs stylus">obj = {<br>  foo: <span class="hljs-string">'foo'</span><br>  bar: <span class="hljs-string">'bar'</span><br>}<br><br>obj2 = {<br>  baz: <span class="hljs-string">'baz'</span><br>}<br><br><span class="hljs-function"><span class="hljs-title">merge</span><span class="hljs-params">(obj, obj2)</span></span><br><span class="hljs-comment">// =&gt; {"foo":"('foo')","bar":"('bar')","baz":"('baz')"}</span><br></code></pre></td></tr></table></figure>
+<h1 id="循环-iteration"><a href="#15.-循环 Iteration" class="headerlink" title="15.-循环 Iteration"></a>15. 循环 Iteration</h1>
+<p>Stylus 允许你使用 <code>for/in</code> 构造迭代表达式，格式如下：</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs md">for <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">val-name</span>&gt;</span></span> [, <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">key-name</span>&gt;</span></span>] in <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">expression</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<h2 id="基本语法"><a href="#15.1-基本语法" class="headerlink" title="15.1-基本语法"></a>15.1 基本语法</h2>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-tag">body</span><br>  <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span><br>    foo num<br></code></pre></td></tr></table></figure>
+<p>生成：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span> {<br>    foo: <span class="hljs-number">1</span>;<br>    foo: <span class="hljs-number">2</span>;<br>    foo: <span class="hljs-number">3</span>;<br>}<br></code></pre></td></tr></table></figure>
+<p>如下实例展示的是如何使用 <code>&lt;key-name&gt;</code>：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-tag">body</span><br>    fonts = Impact Arial sans-serif<br>    <span class="hljs-keyword">for</span> <span class="hljs-attribute">font</span>, i in fonts<br>      foo <span class="hljs-selector-tag">i</span> <span class="hljs-attribute">font</span><br></code></pre></td></tr></table></figure>
+<p>生成：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span> {<br>      foo: <span class="hljs-number">0</span> Impact;<br>      foo: <span class="hljs-number">1</span> Arial;<br>      foo: <span class="hljs-number">2</span> sans-serif;<br>}<br></code></pre></td></tr></table></figure>
+<p>下面展示的是如何书写普通的 for 循环：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-tag">body</span><br>  <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> (<span class="hljs-number">1</span>..<span class="hljs-number">5</span>)<br>    foo num<br></code></pre></td></tr></table></figure>
+<p>生成：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span> {<br>  foo: <span class="hljs-number">1</span>;<br>  foo: <span class="hljs-number">2</span>;<br>  foo: <span class="hljs-number">3</span>;<br>  foo: <span class="hljs-number">4</span>;<br>  foo: <span class="hljs-number">5</span>;<br>}<br></code></pre></td></tr></table></figure>
+<p>与字符串的使用:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> (<span class="hljs-number">1</span>..<span class="hljs-number">10</span>)<br>  .box{num}<br>    <span class="hljs-attribute">animation</span>: box + num <span class="hljs-number">5s</span> infinite<br>  <br>  @keframes box{num}<br>    <span class="hljs-number">0%</span>   { <span class="hljs-attribute">left</span>: <span class="hljs-number">0px</span> }<br>    <span class="hljs-number">100%</span> { <span class="hljs-attribute">left</span>: (num * <span class="hljs-number">30px</span>) }<br></code></pre></td></tr></table></figure>
+<h2 id="混合-mixins"><a href="#15.2-混合 Mixins" class="headerlink" title="15.2-混合 Mixins"></a>15.2 混合 Mixins</h2>
+<p>我们可以在 mixin
+中使用循环实现更强大的功能，例如，我们可以把表达式对作为使用插值和循环的属性。
+We can use iteration within mixins to produce powerful functionality.
+For example, we can apply expression pairs as properties using
+interpolation and iteration.</p>
+<p>下面，我们定义 <code>apply()</code>, 根据条件判断是否利用所有的
+<code>arguments</code>（参数），这样逗号分隔的参数_以及_表达式列表参数都能够被支持。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">apply</span><span class="hljs-params">(props)</span></span><br>   props = arguments <span class="hljs-keyword">if</span> <span class="hljs-built_in">length</span>(arguments) &gt; <span class="hljs-number">1</span><br>   <span class="hljs-keyword">for</span> prop <span class="hljs-keyword">in</span> props<br>     {prop<span class="hljs-selector-attr">[0]</span>} prop<span class="hljs-selector-attr">[1]</span><br><br> <span class="hljs-selector-tag">body</span><br>   <span class="hljs-built_in">apply</span>(one <span class="hljs-number">1</span>, two <span class="hljs-number">2</span>, three <span class="hljs-number">3</span>)<br><br> <span class="hljs-selector-tag">body</span><br>   list = (one <span class="hljs-number">1</span>) (two <span class="hljs-number">2</span>) (three <span class="hljs-number">3</span>)<br>   <span class="hljs-built_in">apply</span>(list)<br></code></pre></td></tr></table></figure>
+<h2 id="函数"><a href="#15.3-函数" class="headerlink" title="15.3-函数"></a>15.3 函数</h2>
+<p>Stylus 中的函数也可以包含 for 循环。如下是一些实例：</p>
+<p>求和：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">sum</span><span class="hljs-params">(nums)</span></span><br>  sum = <span class="hljs-number">0</span><br>  <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nums<br>    sum += n<br><br><span class="hljs-function"><span class="hljs-title">sum</span><span class="hljs-params">(<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span>)</span></span><br><span class="hljs-comment">// =&gt; 6</span><br></code></pre></td></tr></table></figure>
+<p>合并：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">join</span><span class="hljs-params">(delim, args)</span></span><br>  buf = <span class="hljs-string">''</span><br>  <span class="hljs-keyword">for</span> arg, index <span class="hljs-keyword">in</span> args<br>    <span class="hljs-keyword">if</span> index<br>      buf += delim + arg<br>    <span class="hljs-keyword">else</span><br>      buf += arg<br><br><span class="hljs-function"><span class="hljs-title">join</span><span class="hljs-params">(<span class="hljs-string">', '</span>, foo bar baz)</span></span><br><span class="hljs-comment">// =&gt; "foo, bar, baz"</span><br></code></pre></td></tr></table></figure>
+<h2 id="后置表达式"><a href="#15.4-后置表达式" class="headerlink" title="15.4-后置表达式"></a>15.4 后置表达式</h2>
+<p>与 <code>if</code> / <code>unless</code>
+可以利用后置表达式（post-statement）一样，<code>for</code>
+也可以。如下是一些使用后置表达式语法的例子：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">sum</span><span class="hljs-params">(nums)</span></span><br>  sum = <span class="hljs-number">0</span><br>  sum += n <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nums<br><br><br><span class="hljs-function"><span class="hljs-title">join</span><span class="hljs-params">(delim, args)</span></span><br>  buf = <span class="hljs-string">''</span><br>  buf += <span class="hljs-selector-tag">i</span> ? delim + arg : arg <span class="hljs-keyword">for</span> arg, <span class="hljs-selector-tag">i</span> <span class="hljs-keyword">in</span> args<br></code></pre></td></tr></table></figure>
+<p>我们还可以从循环中 <strong>return</strong>
+（返回），下面就是一个实例，当 <code>n % 2 == 0</code> 的值为
+<strong>true</strong> 时就返回数值。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">first-even</span><span class="hljs-params">(nums)</span></span><br>  return n <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> nums<br><br><span class="hljs-function"><span class="hljs-title">first-even</span><span class="hljs-params">(<span class="hljs-number">1</span> <span class="hljs-number">3</span> <span class="hljs-number">5</span> <span class="hljs-number">5</span> <span class="hljs-number">6</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span>)</span></span><br><span class="hljs-comment">// =&gt; 6</span><br></code></pre></td></tr></table></figure>
+<h1 id="省略字符-char-escaping"><a href="#16.-省略字符 Char Escaping" class="headerlink" title="16.-省略字符 Char Escaping"></a>16. 省略字符 Char Escaping</h1>
+<p>Stylus允许你省略一些字符</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-tag">body</span><br>    <span class="hljs-attribute">padding</span> <span class="hljs-number">1</span> \+ <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+<p>编译后:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span>{<br>    <span class="hljs-attribute">padding</span>: <span class="hljs-number">1</span> + <span class="hljs-number">2</span>;<br>}<br></code></pre></td></tr></table></figure>
+<p>在括号中使用的<code>/</code>会被当作运算符，而属性中不会，例如</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-tag">body</span><br>    <span class="hljs-attribute">font</span> <span class="hljs-number">14px</span>/<span class="hljs-number">1.4</span><br>    <span class="hljs-attribute">font</span> (<span class="hljs-number">14px</span>/<span class="hljs-number">1.4</span>)<br></code></pre></td></tr></table></figure>
+<p>编译后:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span>{<br>    <span class="hljs-attribute">font</span>: <span class="hljs-number">14px</span>/<span class="hljs-number">1.4</span>;<br>    <span class="hljs-attribute">font</span>: <span class="hljs-number">10px</span>;<br>}<br></code></pre></td></tr></table></figure>
+<h1 id="url"><a href="#17.-url()" class="headerlink" title="17.-url()"></a>17. url()</h1>
+<h2 id="data-uri-image-inlining"><a href="#17.1-Data URI Image Inlining" class="headerlink" title="17.1-Data URI Image Inlining"></a>17.1 Data URI Image Inlining</h2>
+<p>Stylus is bundled with an optional function named <code>url()</code>,
+which replaces the literal <code>url()</code> calls (and conditionally
+inlines them using base64 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Data_URI_scheme">Data URIs</a>).</p>
+<h2 id="example"><a href="#17.2-Example" class="headerlink" title="17.2-Example"></a>17.2 Example</h2>
+<p>The function itself is available via
+<code>require('stylus').url</code>. It accepts an <code>options</code>
+object, returning a function that Stylus calls internally when it sees
+<code>url()</code>.</p>
+<p>The <code>.define(name, callback)</code> method assigned a JavaScript
+function that can be called from Stylus source. In this case, since our
+images are in <code>./css/images</code>, we can ignore the
+<code>paths</code> option (by default image lookups are performed
+relative to the file being rendered). But if desired, this behavior can
+be altered:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">stylus</span>(str)<br>  .<span class="hljs-title function_">set</span>(<span class="hljs-string">'filename'</span>, __dirname + <span class="hljs-string">'/css/test.styl'</span>)<br>  .<span class="hljs-title function_">define</span>(<span class="hljs-string">'url'</span>, stylus.<span class="hljs-title function_">url</span>())<br>  .<span class="hljs-title function_">render</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">err, css</span>){<br>    <span class="hljs-comment">// render it</span><br>  });<br></code></pre></td></tr></table></figure>
+<p>For example, imagine our images live in <code>./public/images</code>.
+We want to use <code>url(images/tobi.png)</code>. We could pass
+<code>paths</code> our public directory, so that it becomes part of the
+lookup process.</p>
+<p>Likewise, if instead we wanted <code>url(tobi.png)</code>, we could
+pass <code>paths: [__dirname + '/public/images']</code>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">stylus</span>(str)<br>  .<span class="hljs-title function_">set</span>(<span class="hljs-string">'filename'</span>, __dirname + <span class="hljs-string">'/css/test.styl'</span>)<br>  .<span class="hljs-title function_">define</span>(<span class="hljs-string">'url'</span>, stylus.<span class="hljs-title function_">url</span>({ <span class="hljs-attr">paths</span>: [__dirname + <span class="hljs-string">'/public'</span>] }))<br>  .<span class="hljs-title function_">render</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">err, css</span>){<br>    <span class="hljs-comment">// render it</span><br>  });<br></code></pre></td></tr></table></figure>
+<h3 id="utf8-encoding-for-svgs"><a href="#<code>utf8</code>-encoding for SVGs" class="headerlink" title="<code>utf8</code>-encoding for SVGs"></a><code>utf8</code> encoding for SVGs</h3>
+<p>Since base64 encoding an image actually increases the original size,
+you have the option to use <code>utf8</code> encoding when inlining
+SVGs.</p>
+<p>There is a bif for this: <code>embedurl</code>:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.embed-with-utf8</span> {<br>  <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">embedurl</span>(<span class="hljs-string">"circle.svg"</span>, <span class="hljs-string">"utf8"</span>);<br>}<br></code></pre></td></tr></table></figure>
+<p>Would result in utf-encoded inline SVG instead of base64 one.</p>
+<p>If you'd like to use the JS define so you could use the
+<code>paths</code> alongside the utf encoding, you'll need to define it
+using another name, not <code>url()</code>. This is Due to how
+<code>url()</code> function is parsed in Stylus: it is impossible now to
+pass the extra param to it, so you couldn't just call <code>url</code>
+with the second param to set the encoding. But if you'd define the
+<code>url</code> with another name:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">stylus</span>(str)<br>  .<span class="hljs-title function_">set</span>(<span class="hljs-string">'filename'</span>, __dirname + <span class="hljs-string">'/css/test.styl'</span>)<br>  .<span class="hljs-title function_">define</span>(<span class="hljs-string">'inline-url'</span>, stylus.<span class="hljs-title function_">url</span>({ <span class="hljs-attr">paths</span>: [__dirname + <span class="hljs-string">'/public'</span>] }))<br>  .<span class="hljs-title function_">render</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">err, css</span>){<br>    <span class="hljs-comment">// render it</span><br>  });<br></code></pre></td></tr></table></figure>
+<p>You could then use <code>inline-url</code> bif just like you can use
+<code>embedurl</code>, but with an added <code>paths</code>
+functionality:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.embed-with-utf8-at-path</span> {<br>  <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">inline-url</span>(<span class="hljs-string">"tobi.svg"</span>, <span class="hljs-string">"utf8"</span>);<br>}<br></code></pre></td></tr></table></figure>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2023/05/31/stylus%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">← Next stylus学习笔记（1）</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/05/16/evaluation/">Evaluation Method Prev →</a></div></div></div></div><div class="bottom-btn"><div><a id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a id="to-index" href="#toc-div" title="To Catalog">≡</a><a id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="/img/faction/4.png" alt="Logo"></a><h1 id="Dr"><a href="/">冯露露</a></h1><div id="description"><p>分享兴趣爱好的技术博客</p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%A9%E4%BD%99%E5%8F%82%E6%95%B0-rest-params"><span class="toc-text">11. 剩余参数 Rest Params</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E8%A7%84%E5%88%99"><span class="toc-text">11.1 调用规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E9%87%8F-arguments"><span class="toc-text">11.2 参量 arguments</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A-comments"><span class="toc-text">12. 注释 Comments</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A-single-line"><span class="toc-text">12.1 单行注释 Single-line</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%A1%8C%E6%B3%A8%E9%87%8A-multi-line"><span class="toc-text">12.2 多行注释 Multi-line</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%A1%8C%E6%B3%A8%E9%87%8A%E7%BC%93%E5%AD%98-multi-line-buffered"><span class="toc-text">12.3 多行注释缓存 Multi-line
+buffered</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F-conditionals"><span class="toc-text">13. 条件表达式 Conditionals</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#if-else-if-else"><span class="toc-text">13.1 if &#x2F; else if &#x2F; else</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unless"><span class="toc-text">13.2 unless</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#postfix-conditionals"><span class="toc-text">13.3 Postfix Conditionals</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%93%88%E5%B8%8C-hashes"><span class="toc-text">14. 哈希 Hashes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-text">14.1 定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E5%93%88%E5%B8%8C-anonymous-hash"><span class="toc-text">14.2 匿名哈希 Anonymous hash</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E5%99%A8-getters"><span class="toc-text">14.3 访问器 Getters</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E5%80%BC-interpolation"><span class="toc-text">14.4 插值 Interpolation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C-other-stuff"><span class="toc-text">14.5 其他操作 Other stuff</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF-iteration"><span class="toc-text">15. 循环 Iteration</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-text">15.1 基本语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B7%E5%90%88-mixins"><span class="toc-text">15.2 混合 Mixins</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-text">15.3 函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%BD%AE%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">15.4 后置表达式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9C%81%E7%95%A5%E5%AD%97%E7%AC%A6-char-escaping"><span class="toc-text">16. 省略字符 Char Escaping</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#url"><span class="toc-text">17. url()</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#data-uri-image-inlining"><span class="toc-text">17.1 Data URI Image Inlining</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#example"><span class="toc-text">17.2 Example</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#utf8-encoding-for-svgs"><span class="toc-text">utf8 encoding for SVGs</span></a></li></ol></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {code.findCode();
+document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>
